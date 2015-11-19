@@ -20,20 +20,20 @@ namespace LDTE_Web.Controllers
             return View(db.Users.ToList());
         }
 
-        //// GET: Users/Details/5
-        //public ActionResult Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    User user = db.Users.Find(id);
-        //    if (user == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(user);
-        //}
+        // GET: Users/Details/5
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            User user = db.Users.Find(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
+        }
 
         // GET: Users/Create
         public ActionResult Create()
@@ -203,22 +203,7 @@ namespace LDTE_Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Details(int id)
-        {
-            User user = db.Users.Where(m => m.UserID == id).FirstOrDefault();
-            if (user != null)
-            {
-                if (Request.IsAjaxRequest())
-                {
-                    return PartialView("_StudentDetails", user);
-                }
-                else
-                {
-                    return View("StudentDetails", user);
-                }
-            }
-            return View("Index");
-        }
+      
         protected override void Dispose(bool disposing)
         {
             if (disposing)

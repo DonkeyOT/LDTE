@@ -39,7 +39,8 @@ namespace LDTE_Web.Controllers
         // GET: Groups/Create
         public ActionResult Create()
         {
-            return PartialView("_Create");
+            return View();
+            //return PartialView("_Create");
         }
 
         // POST: Groups/Create
@@ -115,6 +116,12 @@ namespace LDTE_Web.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        public ActionResult ShowUsers(int id)
+        {
+            Group group = db.Groups.Find(id);
+            return PartialView("_UserManage",group);
+        }
+
 
         [HttpGet]
         public ActionResult AddUsers(int id)//GroupID GET Action

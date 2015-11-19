@@ -1005,6 +1005,7 @@
     <Content Include="Views\Shared\_Layout - Copy.cshtml" />
     <Content Include="Views\Groups\UserList.cshtml" />
     <Content Include="Views\Groups\_Create.cshtml" />
+    <Content Include="Views\Groups\_UserManage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

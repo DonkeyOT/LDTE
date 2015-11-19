@@ -1,20 +1,24 @@
 ﻿@model IEnumerable<LDTE_Web.Models.Group>
+@using LDTE_Web.Models
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var db = (ViewContext.Controller as LDTE_Web.Controllers.GroupsController).db;
+
 }
 
 <div id="page-wrapper">
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-6">
             <h1 class="page-header">Group management</h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
     <!-- /.row -->
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-6">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     Groups
@@ -32,10 +36,10 @@
                                         @Html.DisplayNameFor(model => model.Description)
                                     </th>
                                     <th>
-                                    @Html.ActionLink("Create", "Create",null, null, new { id = "btnCreate", @class = "btn btn-small btn-primary" })
+                                    @*@Html.ActionLink("Create", "Create",null, null, new { id = "btnCreate", @class = "btn btn-small btn-primary" })*@
 
                                     
-                                    @*@Html.ActionLink("Create", "Create", "Create", new { @class = "btn btn-primary" })*@
+                                    @Html.ActionLink("Create", "Create", "Create", new { @class = "btn btn-primary" })
                                     </th>
                                 </tr>
                             </thead>
@@ -43,15 +47,16 @@
                                 @foreach (var item in Model)
                                 {
                                     <tr>
-                                        <td>
+                                        <td onclick="return LoadPartial(@item.GroupID)">
                                             @Html.DisplayFor(modelItem => item.Name)
                                         </td>
-                                        <td>
+                                        <td onclick="return LoadPartial(@item.GroupID)">
                                             @Html.DisplayFor(modelItem => item.Description)
                                         </td>
                                         <td>
                                             @Html.ActionLink("Edit", "Edit", new { id = item.GroupID }) |
                                             @Html.ActionLink("Details", "Details", new { id = item.GroupID }) |
+                                            @Html.ActionLink("View", "index","Groups",null, new { onclick = "return LoadPartial(" + item.GroupID + ")" }) |
                                             @Html.ActionLink("Delete", "Delete", new { id = item.GroupID }) |
                                             @Html.ActionLink("Add Users", "AddUsers", new { id = item.GroupID })
                                         </td>
@@ -63,6 +68,8 @@
                     </div>
                 </div>
             </div>
+
+        <div id="partialPlaceHolder" > </div>
         </div>
     </div>
 
@@ -76,43 +83,58 @@
             });
         });
 
+        function LoadPartial(id) {
+            var groupid = id;
+            $('#partialPlaceHolder').load("@Url.Action("ShowUsers" , "Groups"  )", { "id": id });
+            return false;
+            //$.ajax({
+            //    url: '/Groups/ShowUsers/' + id,
+            //    dataType: "html",
+            //    success: function (data) {
+            //        $('#partialPlaceHolder').html(data);
+            //        $('#partialPlaceHolder').fadeIn('fast');
+            //    }
+            //});
 
-        $(function () {
-            //Optional: turn the chache off
-            $.ajaxSetup({ cache: false });
 
-            $('#btnCreate').click(function () {
-                $('#dialogContent').load(this.href, function () {
-                    $('#dialogDiv').modal({
-                        backdrop: 'static',
-                        keyboard: true
-                    }, 'show');
-                    bindForm(this);
-                });
-                return false;
-            });
-        });
-
-        function bindForm(dialog) {
-            $('form', dialog).submit(function () {
-                $.ajax({
-                    url: this.action,
-                    type: this.method,
-                    data: $(this).serialize(),
-                    success: function (result) {
-                        if (result.success) {
-                            $('#dialogDiv').modal('hide');
-                            // Refresh:
-                            // location.reload();
-                        } else {
-                            $('#dialogContent').html(result);
-                            bindForm();
-                        }
-                    }
-                });
-                return false;
-            });
         }
+
+        //$(function () {
+        //    //Optional: turn the chache off
+        //    $.ajaxSetup({ cache: false });
+
+        //    $('#btnCreate').click(function () {
+        //        $('#dialogContent').load(this.href, function () {
+        //            $('#dialogDiv').modal({
+        //                backdrop: 'static',
+        //                keyboard: true
+        //            }, 'show');
+        //            bindForm(this);
+        //        });
+        //        return false;
+        //    });
+        //});
+
+        //function bindForm(dialog) {
+        //    $('form', dialog).submit(function () {
+        //        $.ajax({
+        //            url: this.action,
+        //            type: this.method,
+        //            data: $(this).serialize(),
+        //            success: function (result) {
+        //                if (result.success) {
+        //                    $('#dialogDiv').modal('hide');
+        //                    // Refresh:
+        //                    // location.reload();
+        //                } else {
+        //                    $('#dialogContent').html(result);
+        //                    bindForm();
+        //                }
+        //            }
+        //        });
+        //        return false;
+        //    });
+        //}
 
 </script>
 
