@@ -1,0 +1,76 @@
+﻿@model LDTE_Web.Models.Group
+@using LDTE_Web.Models
+@{
+    ViewBag.Title = "AddUsers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var db = (ViewContext.Controller as LDTE_Web.Controllers.GroupsController).db;
+    var users = from u in db.Users
+                where !(
+                        from ug in db.UsersGroups.Where(ug => ug.GroupID == Model.GroupID)
+                        select ug.UserID
+                        )
+                .Contains(u.UserID)
+                select u;
+
+    //var users2 = db.Users.Where(u => !db.UsersGroups.Where(ug => ug.GroupID == Model.GroupID).Select(ug => ug.UserID).Contains(u.UserID));
+
+    var sl = new SelectList(users, "UserID", "DisplayName");
+}
+
+
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Group management</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Add Members for Group
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <h3>@Html.DisplayFor(model => model.Name)</h3>
+                        </div>
+                    </div>
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.GroupID)
+                        @Html.HiddenFor(model => model.GroupID)
+                        @Html.HiddenFor(model => model.Name)
+                        @Html.HiddenFor(model => model.Description)
+
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(model => model.UserID, sl, new { htmlAttributes = new { @class = "form-control" } })
+                                <input type="submit" value="Add selected user to group" class="btn btn-default" />
+                            </div>
+
+
+                        </div>
+                    }
+
+                   
+                </div>
+
+                </div>
+                </div>
+            </div>
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+    @Html.Partial("UserList", Model)
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+    </div>
+
+

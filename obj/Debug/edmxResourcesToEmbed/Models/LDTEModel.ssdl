@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="LDTEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Groups">
+    <Key>
+      <PropertyRef Name="GroupID" />
+    </Key>
+    <Property Name="GroupID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="Permissions">
+    <Key>
+      <PropertyRef Name="PermissionID" />
+    </Key>
+    <Property Name="PermissionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="int" Nullable="false" />
+    <Property Name="GroupID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="LastName" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="50" />
+    <Property Name="PhoneWork" Type="varchar" MaxLength="11" />
+    <Property Name="PhoneMobile" Type="varchar" MaxLength="11" />
+  </EntityType>
+  <EntityType Name="UsersGroups">
+    <Key>
+      <PropertyRef Name="UsersGroupsID" />
+    </Key>
+    <Property Name="UsersGroupsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="GroupID" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Permissions_Groups">
+    <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
+    <End Role="Permissions" Type="Self.Permissions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Groups">
+        <PropertyRef Name="GroupID" />
+      </Principal>
+      <Dependent Role="Permissions">
+        <PropertyRef Name="GroupID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsersGroups_Groups">
+    <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
+    <End Role="UsersGroups" Type="Self.UsersGroups" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Groups">
+        <PropertyRef Name="GroupID" />
+      </Principal>
+      <Dependent Role="UsersGroups">
+        <PropertyRef Name="GroupID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsersGroups_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="UsersGroups" Type="Self.UsersGroups" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="UsersGroups">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="LDTEModelStoreContainer">
+    <EntitySet Name="Groups" EntityType="Self.Groups" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Permissions" EntityType="Self.Permissions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UsersGroups" EntityType="Self.UsersGroups" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Permissions_Groups" Association="Self.FK_Permissions_Groups">
+      <End Role="Groups" EntitySet="Groups" />
+      <End Role="Permissions" EntitySet="Permissions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsersGroups_Groups" Association="Self.FK_UsersGroups_Groups">
+      <End Role="Groups" EntitySet="Groups" />
+      <End Role="UsersGroups" EntitySet="UsersGroups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsersGroups_Users" Association="Self.FK_UsersGroups_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="UsersGroups" EntitySet="UsersGroups" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

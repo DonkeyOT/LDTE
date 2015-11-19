@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="LDTEModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Group">
+    <Key>
+      <PropertyRef Name="GroupID" />
+    </Key>
+    <Property Name="GroupID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Permissions" Relationship="Self.FK_Permissions_Groups" FromRole="Groups" ToRole="Permissions" />
+    <NavigationProperty Name="UsersGroups" Relationship="Self.FK_UsersGroups_Groups" FromRole="Groups" ToRole="UsersGroups" />
+  </EntityType>
+  <EntityType Name="Permission">
+    <Key>
+      <PropertyRef Name="PermissionID" />
+    </Key>
+    <Property Name="PermissionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="Int32" Nullable="false" />
+    <Property Name="GroupID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Group" Relationship="Self.FK_Permissions_Groups" FromRole="Permissions" ToRole="Groups" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PhoneWork" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+    <Property Name="PhoneMobile" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="UsersGroups" Relationship="Self.FK_UsersGroups_Users" FromRole="Users" ToRole="UsersGroups" />
+  </EntityType>
+  <EntityType Name="UsersGroup">
+    <Key>
+      <PropertyRef Name="UsersGroupsID" />
+    </Key>
+    <Property Name="UsersGroupsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="GroupID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Group" Relationship="Self.FK_UsersGroups_Groups" FromRole="UsersGroups" ToRole="Groups" />
+    <NavigationProperty Name="User" Relationship="Self.FK_UsersGroups_Users" FromRole="UsersGroups" ToRole="Users" />
+  </EntityType>
+  <Association Name="FK_Permissions_Groups">
+    <End Role="Groups" Type="Self.Group" Multiplicity="1" />
+    <End Role="Permissions" Type="Self.Permission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Groups">
+        <PropertyRef Name="GroupID" />
+      </Principal>
+      <Dependent Role="Permissions">
+        <PropertyRef Name="GroupID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsersGroups_Groups">
+    <End Role="Groups" Type="Self.Group" Multiplicity="1" />
+    <End Role="UsersGroups" Type="Self.UsersGroup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Groups">
+        <PropertyRef Name="GroupID" />
+      </Principal>
+      <Dependent Role="UsersGroups">
+        <PropertyRef Name="GroupID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsersGroups_Users">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="UsersGroups" Type="Self.UsersGroup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="UsersGroups">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="LDTEEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Groups" EntityType="Self.Group" />
+    <EntitySet Name="Permissions" EntityType="Self.Permission" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="UsersGroups" EntityType="Self.UsersGroup" />
+    <AssociationSet Name="FK_Permissions_Groups" Association="Self.FK_Permissions_Groups">
+      <End Role="Groups" EntitySet="Groups" />
+      <End Role="Permissions" EntitySet="Permissions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsersGroups_Groups" Association="Self.FK_UsersGroups_Groups">
+      <End Role="Groups" EntitySet="Groups" />
+      <End Role="UsersGroups" EntitySet="UsersGroups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsersGroups_Users" Association="Self.FK_UsersGroups_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="UsersGroups" EntitySet="UsersGroups" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

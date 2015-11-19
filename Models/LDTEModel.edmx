@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="LDTEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Groups">
+          <Key>
+            <PropertyRef Name="GroupID" />
+          </Key>
+          <Property Name="GroupID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Permissions">
+          <Key>
+            <PropertyRef Name="PermissionID" />
+          </Key>
+          <Property Name="PermissionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="int" Nullable="false" />
+          <Property Name="GroupID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="PhoneWork" Type="varchar" MaxLength="11" />
+          <Property Name="PhoneMobile" Type="varchar" MaxLength="11" />
+        </EntityType>
+        <EntityType Name="UsersGroups">
+          <Key>
+            <PropertyRef Name="UsersGroupsID" />
+          </Key>
+          <Property Name="UsersGroupsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="GroupID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Permissions_Groups">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
+          <End Role="Permissions" Type="Self.Permissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="GroupID" />
+            </Principal>
+            <Dependent Role="Permissions">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersGroups_Groups">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
+          <End Role="UsersGroups" Type="Self.UsersGroups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="GroupID" />
+            </Principal>
+            <Dependent Role="UsersGroups">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersGroups_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UsersGroups" Type="Self.UsersGroups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UsersGroups">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LDTEModelStoreContainer">
+          <EntitySet Name="Groups" EntityType="Self.Groups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Permissions" EntityType="Self.Permissions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsersGroups" EntityType="Self.UsersGroups" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Permissions_Groups" Association="Self.FK_Permissions_Groups">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="Permissions" EntitySet="Permissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersGroups_Groups" Association="Self.FK_UsersGroups_Groups">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="UsersGroups" EntitySet="UsersGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersGroups_Users" Association="Self.FK_UsersGroups_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersGroups" EntitySet="UsersGroups" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LDTEModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="GroupID" />
+          </Key>
+          <Property Name="GroupID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Permissions" Relationship="Self.FK_Permissions_Groups" FromRole="Groups" ToRole="Permissions" />
+          <NavigationProperty Name="UsersGroups" Relationship="Self.FK_UsersGroups_Groups" FromRole="Groups" ToRole="UsersGroups" />
+        </EntityType>
+        <EntityType Name="Permission">
+          <Key>
+            <PropertyRef Name="PermissionID" />
+          </Key>
+          <Property Name="PermissionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="Int32" Nullable="false" />
+          <Property Name="GroupID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Group" Relationship="Self.FK_Permissions_Groups" FromRole="Permissions" ToRole="Groups" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneWork" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneMobile" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UsersGroups" Relationship="Self.FK_UsersGroups_Users" FromRole="Users" ToRole="UsersGroups" />
+        </EntityType>
+        <EntityType Name="UsersGroup">
+          <Key>
+            <PropertyRef Name="UsersGroupsID" />
+          </Key>
+          <Property Name="UsersGroupsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="GroupID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Group" Relationship="Self.FK_UsersGroups_Groups" FromRole="UsersGroups" ToRole="Groups" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UsersGroups_Users" FromRole="UsersGroups" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK_Permissions_Groups">
+          <End Role="Groups" Type="Self.Group" Multiplicity="1" />
+          <End Role="Permissions" Type="Self.Permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="GroupID" />
+            </Principal>
+            <Dependent Role="Permissions">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersGroups_Groups">
+          <End Role="Groups" Type="Self.Group" Multiplicity="1" />
+          <End Role="UsersGroups" Type="Self.UsersGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="GroupID" />
+            </Principal>
+            <Dependent Role="UsersGroups">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersGroups_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="UsersGroups" Type="Self.UsersGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UsersGroups">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LDTEEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Groups" EntityType="Self.Group" />
+          <EntitySet Name="Permissions" EntityType="Self.Permission" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="UsersGroups" EntityType="Self.UsersGroup" />
+          <AssociationSet Name="FK_Permissions_Groups" Association="Self.FK_Permissions_Groups">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="Permissions" EntitySet="Permissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersGroups_Groups" Association="Self.FK_UsersGroups_Groups">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="UsersGroups" EntitySet="UsersGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersGroups_Users" Association="Self.FK_UsersGroups_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersGroups" EntitySet="UsersGroups" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LDTEModelStoreContainer" CdmEntityContainer="LDTEEntities">
+          <EntitySetMapping Name="Groups">
+            <EntityTypeMapping TypeName="LDTEModel.Group">
+              <MappingFragment StoreEntitySet="Groups">
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Permissions">
+            <EntityTypeMapping TypeName="LDTEModel.Permission">
+              <MappingFragment StoreEntitySet="Permissions">
+                <ScalarProperty Name="PermissionID" ColumnName="PermissionID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="LDTEModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="PhoneWork" ColumnName="PhoneWork" />
+                <ScalarProperty Name="PhoneMobile" ColumnName="PhoneMobile" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsersGroups">
+            <EntityTypeMapping TypeName="LDTEModel.UsersGroup">
+              <MappingFragment StoreEntitySet="UsersGroups">
+                <ScalarProperty Name="UsersGroupsID" ColumnName="UsersGroupsID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

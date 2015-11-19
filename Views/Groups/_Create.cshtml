@@ -1,0 +1,31 @@
+﻿@using LDTE_Web.Models
+@model LDTE_Web.Models.Group
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Create Group</h3>
+</div>
+@using (Html.BeginForm("CreateGroup", "Groups", FormMethod.Post, new { @class = "modal-form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body">
+        <div>
+            @Html.LabelFor(x => x.Name)
+            @Html.EditorFor(x => x.Name)
+            @Html.ValidationMessageFor(x => x.Name)
+        </div>
+        <div>
+            @Html.LabelFor(x => x.Description)
+            @Html.EditorFor(x => x.Description)
+            @Html.ValidationMessageFor(x => x.Description)
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Undo</button>
+        <button class="btn btn-primary" type="submit">Save</button>
+    </div>
+
+}
+
