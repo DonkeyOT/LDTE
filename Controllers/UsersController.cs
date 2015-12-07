@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LDTE_Web.Models;
+using System.Data.Entity.Validation;
+using System.Text;
 
 namespace LDTE_Web.Controllers
 {
@@ -15,7 +17,7 @@ namespace LDTE_Web.Controllers
         public LDTEEntities db = new LDTEEntities();
 
         // GET: Users
-        public ActionResult Index()
+        public ActionResult ManageUser()
         {
             return View(db.Users.ToList());
         }
@@ -32,13 +34,15 @@ namespace LDTE_Web.Controllers
             {
                 return HttpNotFound();
             }
-            return View(user);
+            return PartialView("_Details", user);
         }
 
         // GET: Users/Create
-        public ActionResult Create()
+        public ActionResult CreateUser(string formView)
         {
-            return View();
+            var dto = new User { FormView = formView };
+            // return View();
+            return PartialView("_Create", dto);
         }
 
         // POST: Users/Create
@@ -46,20 +50,27 @@ namespace LDTE_Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserID,FirstName,LastName,Email,Password,PhoneWork,PhoneMobile")] User user)
+        public ActionResult CreateUser([Bind(Include = "UserID,PrefixName,FirstName,LastName,MiddleName,SuffixName,DateOfBirth,Login,Password,SecurityHint,SecurityAnswer,PasswordDate,LockoutFlag,InactiveDate")] User user)
         {
             if (ModelState.IsValid)
             {
-                db.Users.Add(user);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.Users.Add(user);
+                    db.SaveChanges();
+                    return Content("SUCCESS");
+                }
+                catch (Exception ex)
+                {
+                    return Content(ex.Message);
+                }
             }
 
             return View(user);
         }
 
         // GET: Users/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult EditUser(int? id, string formView)
         {
             if (id == null)
             {
@@ -70,7 +81,9 @@ namespace LDTE_Web.Controllers
             {
                 return HttpNotFound();
             }
-            return View(user);
+            user.FormView = formView;
+
+            return PartialView("_Edit", user);
         }
 
         // POST: Users/Edit/5
@@ -78,19 +91,146 @@ namespace LDTE_Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserID,FirstName,LastName,Email,Password,PhoneWork,PhoneMobile")] User user)
+        public ActionResult EditUser([Bind(Include = "UserID,PrefixName,FirstName,LastName,MiddleName,SuffixName,DateOfBirth,Login,Password,SecurityHint,SecurityAnswer,PasswordDate,LockoutFlag,InactiveDate")] User user)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return Content("SUCCESS");
             }
             return View(user);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
 
         // GET: Users/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult DeleteUser(int? id, string formView)
         {
             if (id == null)
             {
@@ -101,109 +241,28 @@ namespace LDTE_Web.Controllers
             {
                 return HttpNotFound();
             }
-            return View(user);
+            user.FormView = formView;
+            return PartialView("_Delete", user);
         }
 
         // POST: Users/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("DeleteUser")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            User user = db.Users.Find(id);
+            try
+            {
+                User user = db.Users.Find(id);
             db.Users.Remove(user);
             db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        [HttpGet]
-        public ActionResult AddEditRecord(int? id)
-        {
-            if (Request.IsAjaxRequest())
-            {
-                if (id != null)
-                {
-                    ViewBag.IsUpdate = true;
-                    User student = db.Users.Where(m => m.UserID == id).FirstOrDefault();
-                    return PartialView("_UserData");
-                }
-                ViewBag.IsUpdate = false;
-                return PartialView("_StudentData");
+            return Content("SUCCESS");
             }
-            else
+            catch (Exception ex)
             {
-                if (id != null)
-                {
-                    ViewBag.IsUpdate = true;
-                    User student = db.Users.Where(m => m.UserID == id).FirstOrDefault();
-                    return PartialView("UserData");
-                }
-                ViewBag.IsUpdate = false;
-                return View("UserData");
+                return Content(ex.Message);
             }
         }
 
-        [HttpPost]
-        public ActionResult AddEditRecord(User user, string cmd)
-        {
-            if (ModelState.IsValid)
-            {
-                if (cmd == "Save")
-                {
-                    try
-                    {
-                        db.Users.Add(user);
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
-                    }
-                    catch { }
-                }
-                else
-                {
-                    try
-                    {
-                        User us = db.Users.Where(m => m.UserID == user.UserID).FirstOrDefault();
-                        if (us != null)
-                        {
-                            us.FirstName = user.FirstName;
-                            us.LastName = user.LastName;
-                            us.Email = user.Email;
-                            us.Password = user.Password;
-                            us.PhoneWork = user.PhoneWork;
-                            us.PhoneMobile = user.PhoneMobile;
-                            db.SaveChanges();
-                        }
-                        return RedirectToAction("Index");
-                    }
-                    catch { }
-                }
-            }
-
-            if (Request.IsAjaxRequest())
-            {
-                return PartialView("_UserData", user);
-            }
-            else
-            {
-                return View("UserData", user);
-            }
-        }
-
-        public ActionResult DeleteRecord(int id)
-        {
-            User user = db.Users.Where(m => m.UserID == id).FirstOrDefault();
-            if (user != null)
-            {
-                try
-                {
-                    db.Users.Remove(user);
-                    db.SaveChanges();
-                }
-                catch { }
-            }
-            return RedirectToAction("Index");
-        }
-
-      
         protected override void Dispose(bool disposing)
         {
             if (disposing)

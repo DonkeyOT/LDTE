@@ -4,14 +4,65 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="240c96e4a4984038904f236df4a575c9" Name="Diagram1">
-        <EntityTypeShape EntityType="LDTEModel.Group" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LDTEModel.Permission" Width="1.5" PointX="3.625" PointY="3" IsExpanded="true" />
-        <EntityTypeShape EntityType="LDTEModel.User" Width="1.5" PointX="0.75" PointY="7" IsExpanded="true" />
-        <EntityTypeShape EntityType="LDTEModel.UsersGroup" Width="1.5" PointX="5.875" PointY="2" IsExpanded="true" />
-        <AssociationConnector Association="LDTEModel.FK_Permissions_Groups" ManuallyRouted="false" />
-        <AssociationConnector Association="LDTEModel.FK_UsersGroups_Groups" ManuallyRouted="false" />
-        <AssociationConnector Association="LDTEModel.FK_UsersGroups_Users" ManuallyRouted="false" />
+      <Diagram DiagramId="d803aef981c8491ba8870166f9e585d5" Name="Diagram1">
+        <EntityTypeShape EntityType="LDTEModel.AddressType" Width="1.5" PointX="12.75" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="LDTEModel.EmailType" Width="1.5" PointX="15.75" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="LDTEModel.Group" Width="1.5" PointX="5.25" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LDTEModel.GroupPermission" Width="1.5" PointX="7.5" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LDTEModel.Organization" Width="1.5" PointX="12.75" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LDTEModel.Personnel" Width="1.5" PointX="10.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LDTEModel.PhoneType" Width="1.5" PointX="15.75" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="LDTEModel.Position" Width="1.5" PointX="8.25" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LDTEModel.PositionGroup" Width="1.5" PointX="10.5" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LDTEModel.SystemDomain" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LDTEModel.SystemDomainModule" Width="1.5" PointX="3" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LDTEModel.SystemFunction" Width="1.5" PointX="5.25" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="LDTEModel.SystemFunctionObject" Width="1.5" PointX="7.5" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LDTEModel.SystemModule" Width="1.5" PointX="0.75" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LDTEModel.SystemNavigation" Width="1.5" PointX="3" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LDTEModel.SystemNotification" Width="1.5" PointX="2.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LDTEModel.SystemNotificationHistory" Width="1.5" PointX="5" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LDTEModel.SystemNotificationRecipient" Width="1.5" PointX="0.75" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LDTEModel.SystemSearch" Width="1.5" PointX="8.25" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LDTEModel.SystemSearchParameter" Width="1.5" PointX="10.5" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LDTEModel.SystemSearchSystemFunction" Width="1.5" PointX="10.5" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LDTEModel.User" Width="1.5" PointX="12.75" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LDTEModel.UserAddress" Width="1.5" PointX="15" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LDTEModel.UserGroup" Width="1.5" PointX="18" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LDTEModel.UserHistory" Width="1.5" PointX="2.75" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LDTEModel.UserLoginAttempt" Width="1.5" PointX="4.75" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LDTEModel.UserPhone" Width="1.5" PointX="18" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LDTEModel.UserEmail" Width="1.5" PointX="18" PointY="9.875" IsExpanded="true" />
+        <AssociationConnector Association="LDTEModel.FK_UserAddress_AddressType" ManuallyRouted="false" />
+        <AssociationConnector Association="LDTEModel.FK_UserEmail_EmailType" ManuallyRouted="false" />
+        <AssociationConnector Association="LDTEModel.FK_GroupPermission_Group" ManuallyRouted="false" />
+        <AssociationConnector Association="LDTEModel.FK_PositionGroup_Group" ManuallyRouted="false" />
+        <AssociationConnector Association="LDTEModel.FK_UserGroup_Group" ManuallyRouted="false" />
+        <AssociationConnector Association="LDTEModel.FK_GroupPermission_SystemFunction" ManuallyRouted="false" />
+        <AssociationConnector Association="LDTEModel.FK_Personnel_Position" ManuallyRouted="false" />
+        <AssociationConnector Association="LDTEModel.FK_UserPhone_PhoneType" ManuallyRouted="false" />
+        <AssociationConnector Association="LDTEModel.FK_PositionGroup_Position" ManuallyRouted="false" />
+        <AssociationConnector Association="LDTEModel.FK_SystemDomainModule_SystemDomain" ManuallyRouted="false" />
+        <AssociationConnector Association="LDTEModel.FK_SystemDomainModule_SystemModule" ManuallyRouted="false" />
+        <AssociationConnector Association="LDTEModel.FK_SystemFunction_SystemNavigation" ManuallyRouted="false" />
+        <AssociationConnector Association="LDTEModel.FK_SystemFunctionObject_SystemFunction" ManuallyRouted="false" />
+        <AssociationConnector Association="LDTEModel.FK_SystemSearchSystemFunction_SystemFunction" ManuallyRouted="false" />
+        <AssociationConnector Association="LDTEModel.FK_SystemNavigation_SystemModule" ManuallyRouted="false" />
+        <AssociationConnector Association="LDTEModel.FK_SystemNotificationHistory_SystemNotification" ManuallyRouted="false" />
+        <AssociationConnector Association="LDTEModel.FK_SystemSearchParameter_SystemSearch" ManuallyRouted="false" />
+        <AssociationConnector Association="LDTEModel.FK_SystemSearchSystemFunction_SystemSearch" ManuallyRouted="false" />
+        <AssociationConnector Association="LDTEModel.FK_UserAddress_User" ManuallyRouted="false" />
+        <AssociationConnector Association="LDTEModel.FK_UserEmail_User" ManuallyRouted="false" />
+        <AssociationConnector Association="LDTEModel.FK_UserGroup_User" ManuallyRouted="false" />
+        <AssociationConnector Association="LDTEModel.FK_UserPhone_User" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="LDTEModel.OrganizationAddress" Width="1.5" PointX="18" PointY="13.125" />
+        <EntityTypeShape EntityType="LDTEModel.OrganizationPhone" Width="1.5" PointX="21" PointY="7.375" />
+        <EntityTypeShape EntityType="LDTEModel.SystemFunctionMessage" Width="1.5" PointX="7.5" PointY="19" />
+        <AssociationConnector Association="LDTEModel.FK_OrganizationAddress_AddressType" />
+        <AssociationConnector Association="LDTEModel.FK_OrganizationAddress_Organization" />
+        <AssociationConnector Association="LDTEModel.FK_OrganizationPhone_Organization" />
+        <AssociationConnector Association="LDTEModel.FK_OrganizationPhone_PhoneType" />
+        <AssociationConnector Association="LDTEModel.FK_SystemFunctionMessage_SystemFunction" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

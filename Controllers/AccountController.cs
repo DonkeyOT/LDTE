@@ -9,12 +9,15 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using LDTE_Web.Models;
+using System.Web.Security;
+using System.Web.Script.Serialization;
 
 namespace LDTE_Web.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
+        public LDTEEntities db = new LDTEEntities();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -75,20 +78,69 @@ namespace LDTE_Web.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            switch (result)
+
+
+            var user = db.Users.Where(l => l.Login == model.Login)
+                                   .Where(l => l.Password == model.Password )
+                                   .FirstOrDefault();
+
+            if (user == null)
             {
-                case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
+                ModelState.AddModelError("", "Invalid login attempt");
+                return View(model);
             }
+            else
+            {
+                if (user.LockoutFlag == true)
+                {
+                    ModelState.AddModelError("", "User locked out. Please contact administrator.");
+                    return View(model);
+                }
+                else
+                {
+                    CustomPrincipalSerializeModel serializeModel = new CustomPrincipalSerializeModel();
+                    serializeModel.Id = user.UserID;
+                    serializeModel.FirstName = user.FirstName;
+                    serializeModel.LastName = user.LastName;
+
+                    JavaScriptSerializer serializer = new JavaScriptSerializer();
+
+                    string userData = serializer.Serialize(serializeModel);
+
+                    FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(
+                             1,
+                             user.Login,
+                             DateTime.Now,
+                             DateTime.Now.AddMinutes(15),
+                             false,
+                             userData);
+
+                    string encTicket = FormsAuthentication.Encrypt(authTicket);
+                    HttpCookie faCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
+                    Response.Cookies.Add(faCookie);
+
+                    Session["User"] = user;
+                    //Session["user"] = user.DisplayName;
+                    return RedirectToLocal("Home");
+                }
+            }
+          
+
+            //var foo = "hello";
+            //var result = await SignInManager.PasswordSignInAsync(model.Login, model.Password, model.RememberMe, shouldLockout: false);
+            //switch (result)
+            //{
+            //    case SignInStatus.Success:
+            //        return RedirectToLocal(returnUrl);
+            //    case SignInStatus.LockedOut:
+            //        return View("Lockout");
+            //    case SignInStatus.RequiresVerification:
+            //        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+            //    case SignInStatus.Failure:
+            //    default:
+            //        ModelState.AddModelError("", "Invalid login attempt.");
+            //        return View(model);
+            //}
         }
 
         //

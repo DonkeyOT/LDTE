@@ -17,17 +17,22 @@ namespace LDTE_Web.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Group()
         {
-            this.Permissions = new HashSet<Permission>();
-            this.UsersGroups = new HashSet<UsersGroup>();
+            this.GroupPermissions = new HashSet<GroupPermission>();
+            this.PositionGroups = new HashSet<PositionGroup>();
+            this.UserGroups = new HashSet<UserGroup>();
         }
     
         public int GroupID { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string GroupName { get; set; }
+        public string GroupCode { get; set; }
+        public string GroupAlias { get; set; }
+        public string GroupDescription { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Permission> Permissions { get; set; }
+        public virtual ICollection<GroupPermission> GroupPermissions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UsersGroup> UsersGroups { get; set; }
+        public virtual ICollection<PositionGroup> PositionGroups { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserGroup> UserGroups { get; set; }
     }
 }

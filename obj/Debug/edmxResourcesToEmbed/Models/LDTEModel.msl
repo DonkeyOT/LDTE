@@ -1,45 +1,418 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="LDTEModelStoreContainer" CdmEntityContainer="LDTEEntities">
-    <EntitySetMapping Name="Groups">
-      <EntityTypeMapping TypeName="LDTEModel.Group">
-        <MappingFragment StoreEntitySet="Groups">
-          <ScalarProperty Name="GroupID" ColumnName="GroupID" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Description" ColumnName="Description" />
+    <EntitySetMapping Name="AddressTypes">
+      <EntityTypeMapping TypeName="LDTEModel.AddressType">
+        <MappingFragment StoreEntitySet="AddressType">
+          <ScalarProperty Name="AddressTypeAlias" ColumnName="AddressTypeAlias" />
+          <ScalarProperty Name="AddressTypeName" ColumnName="AddressTypeName" />
+          <ScalarProperty Name="AddressTypeID" ColumnName="AddressTypeID" />
+          <ScalarProperty Name="AddressTypeCode" ColumnName="AddressTypeCode" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Permissions">
-      <EntityTypeMapping TypeName="LDTEModel.Permission">
-        <MappingFragment StoreEntitySet="Permissions">
-          <ScalarProperty Name="PermissionID" ColumnName="PermissionID" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
+    <EntitySetMapping Name="EmailTypes">
+      <EntityTypeMapping TypeName="LDTEModel.EmailType">
+        <MappingFragment StoreEntitySet="EmailType">
+          <ScalarProperty Name="EmailTypeAlias" ColumnName="EmailTypeAlias" />
+          <ScalarProperty Name="EmailTypeName" ColumnName="EmailTypeName" />
+          <ScalarProperty Name="EmailTypeID" ColumnName="EmailTypeID" />
+          <ScalarProperty Name="EmailTypeCode" ColumnName="EmailTypeCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Groups">
+      <EntityTypeMapping TypeName="LDTEModel.Group">
+        <MappingFragment StoreEntitySet="Group">
           <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+          <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+          <ScalarProperty Name="GroupCode" ColumnName="GroupCode" />
+          <ScalarProperty Name="GroupAlias" ColumnName="GroupAlias" />
+          <ScalarProperty Name="GroupDescription" ColumnName="GroupDescription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GroupPermissions">
+      <EntityTypeMapping TypeName="LDTEModel.GroupPermission">
+        <MappingFragment StoreEntitySet="GroupPermission">
+          <ScalarProperty Name="GroupPermissionID" ColumnName="GroupPermissionID" />
+          <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+          <ScalarProperty Name="SystemFunctionID" ColumnName="SystemFunctionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Organizations">
+      <EntityTypeMapping TypeName="LDTEModel.Organization">
+        <MappingFragment StoreEntitySet="Organization">
+          <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
+          <ScalarProperty Name="OrganizationName" ColumnName="OrganizationName" />
+          <ScalarProperty Name="OrganizationCode" ColumnName="OrganizationCode" />
+          <ScalarProperty Name="OrganizationAlias" ColumnName="OrganizationAlias" />
+          <ScalarProperty Name="MasterAccount" ColumnName="MasterAccount" />
+          <ScalarProperty Name="MasterPassword" ColumnName="MasterPassword" />
+          <ScalarProperty Name="MasterPosition" ColumnName="MasterPosition" />
+          <ScalarProperty Name="InactiveDate" ColumnName="InactiveDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Personnels">
+      <EntityTypeMapping TypeName="LDTEModel.Personnel">
+        <MappingFragment StoreEntitySet="Personnel">
+          <ScalarProperty Name="PersonnelID" ColumnName="PersonnelID" />
+          <ScalarProperty Name="EntityHubID" ColumnName="EntityHubID" />
+          <ScalarProperty Name="PositionID" ColumnName="PositionID" />
+          <ScalarProperty Name="EffectiveDate" ColumnName="EffectiveDate" />
+          <ScalarProperty Name="CeaseDate" ColumnName="CeaseDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PhoneTypes">
+      <EntityTypeMapping TypeName="LDTEModel.PhoneType">
+        <MappingFragment StoreEntitySet="PhoneType">
+          <ScalarProperty Name="PhoneTypeAlias" ColumnName="PhoneTypeAlias" />
+          <ScalarProperty Name="PhoneTypeName" ColumnName="PhoneTypeName" />
+          <ScalarProperty Name="PhoneTypeID" ColumnName="PhoneTypeID" />
+          <ScalarProperty Name="PhoneTypeCode" ColumnName="PhoneTypeCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Positions">
+      <EntityTypeMapping TypeName="LDTEModel.Position">
+        <MappingFragment StoreEntitySet="Position">
+          <ScalarProperty Name="PositionID" ColumnName="PositionID" />
+          <ScalarProperty Name="EntityHubID" ColumnName="EntityHubID" />
+          <ScalarProperty Name="PositionName" ColumnName="PositionName" />
+          <ScalarProperty Name="PositionCode" ColumnName="PositionCode" />
+          <ScalarProperty Name="PositionAlias" ColumnName="PositionAlias" />
+          <ScalarProperty Name="InactiveDate" ColumnName="InactiveDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PositionGroups">
+      <EntityTypeMapping TypeName="LDTEModel.PositionGroup">
+        <MappingFragment StoreEntitySet="PositionGroup">
+          <ScalarProperty Name="PositionGroupID" ColumnName="PositionGroupID" />
+          <ScalarProperty Name="PositionID" ColumnName="PositionID" />
+          <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SystemDomains">
+      <EntityTypeMapping TypeName="LDTEModel.SystemDomain">
+        <MappingFragment StoreEntitySet="SystemDomain">
+          <ScalarProperty Name="SystemDomainID" ColumnName="SystemDomainID" />
+          <ScalarProperty Name="SystemDomainName" ColumnName="SystemDomainName" />
+          <ScalarProperty Name="SystemDomainTitle" ColumnName="SystemDomainTitle" />
+          <ScalarProperty Name="SystemDomainImage" ColumnName="SystemDomainImage" />
+          <ScalarProperty Name="SystemDomainFooter" ColumnName="SystemDomainFooter" />
+          <ScalarProperty Name="SystemDomainDefaultAction" ColumnName="SystemDomainDefaultAction" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SystemDomainModules">
+      <EntityTypeMapping TypeName="LDTEModel.SystemDomainModule">
+        <MappingFragment StoreEntitySet="SystemDomainModule">
+          <ScalarProperty Name="SystemDomainModuleID" ColumnName="SystemDomainModuleID" />
+          <ScalarProperty Name="SystemDomainID" ColumnName="SystemDomainID" />
+          <ScalarProperty Name="SystemModuleID" ColumnName="SystemModuleID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SystemFunctions">
+      <EntityTypeMapping TypeName="LDTEModel.SystemFunction">
+        <MappingFragment StoreEntitySet="SystemFunction">
+          <ScalarProperty Name="SystemFunctionID" ColumnName="SystemFunctionID" />
+          <ScalarProperty Name="SystemNavigationID" ColumnName="SystemNavigationID" />
+          <ScalarProperty Name="SystemFunctionName" ColumnName="SystemFunctionName" />
+          <ScalarProperty Name="SystemFunctionCode" ColumnName="SystemFunctionCode" />
+          <ScalarProperty Name="SystemFunctionAlias" ColumnName="SystemFunctionAlias" />
+          <ScalarProperty Name="SystemFunctionAction" ColumnName="SystemFunctionAction" />
+          <ScalarProperty Name="SystemFunctionDescription" ColumnName="SystemFunctionDescription" />
+          <ScalarProperty Name="NavigationFlag" ColumnName="NavigationFlag" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SystemFunctionObjects">
+      <EntityTypeMapping TypeName="LDTEModel.SystemFunctionObject">
+        <MappingFragment StoreEntitySet="SystemFunctionObject">
+          <ScalarProperty Name="SystemFunctionObjectID" ColumnName="SystemFunctionObjectID" />
+          <ScalarProperty Name="SystemFunctionID" ColumnName="SystemFunctionID" />
+          <ScalarProperty Name="SystemFunctionObjectType" ColumnName="SystemFunctionObjectType" />
+          <ScalarProperty Name="SystemFunctionObjectTarget" ColumnName="SystemFunctionObjectTarget" />
+          <ScalarProperty Name="SystemFunctionObjectAlias" ColumnName="SystemFunctionObjectAlias" />
+          <ScalarProperty Name="SystemFunctionObjectAction" ColumnName="SystemFunctionObjectAction" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SystemModules">
+      <EntityTypeMapping TypeName="LDTEModel.SystemModule">
+        <MappingFragment StoreEntitySet="SystemModule">
+          <ScalarProperty Name="SystemModuleID" ColumnName="SystemModuleID" />
+          <ScalarProperty Name="SystemModuleName" ColumnName="SystemModuleName" />
+          <ScalarProperty Name="SystemModuleCode" ColumnName="SystemModuleCode" />
+          <ScalarProperty Name="SystemModuleAlias" ColumnName="SystemModuleAlias" />
+          <ScalarProperty Name="SystemModuleDescription" ColumnName="SystemModuleDescription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SystemNavigations">
+      <EntityTypeMapping TypeName="LDTEModel.SystemNavigation">
+        <MappingFragment StoreEntitySet="SystemNavigation">
+          <ScalarProperty Name="SystemNavigationID" ColumnName="SystemNavigationID" />
+          <ScalarProperty Name="SystemModuleID" ColumnName="SystemModuleID" />
+          <ScalarProperty Name="SystemNavigationName" ColumnName="SystemNavigationName" />
+          <ScalarProperty Name="SystemNavigationCode" ColumnName="SystemNavigationCode" />
+          <ScalarProperty Name="SystemNavigationAlias" ColumnName="SystemNavigationAlias" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SystemNotifications">
+      <EntityTypeMapping TypeName="LDTEModel.SystemNotification">
+        <MappingFragment StoreEntitySet="SystemNotification">
+          <ScalarProperty Name="SystemNotificationID" ColumnName="SystemNotificationID" />
+          <ScalarProperty Name="SystemNotificationName" ColumnName="SystemNotificationName" />
+          <ScalarProperty Name="SystemNotificationCode" ColumnName="SystemNotificationCode" />
+          <ScalarProperty Name="SystemNotificationProfile" ColumnName="SystemNotificationProfile" />
+          <ScalarProperty Name="SystemNotificationReplyEmail" ColumnName="SystemNotificationReplyEmail" />
+          <ScalarProperty Name="SystemNotificationSubject" ColumnName="SystemNotificationSubject" />
+          <ScalarProperty Name="SystemNotificationBody" ColumnName="SystemNotificationBody" />
+          <ScalarProperty Name="SystemNotificationBodyFormat" ColumnName="SystemNotificationBodyFormat" />
+          <ScalarProperty Name="SystemNotificationImportance" ColumnName="SystemNotificationImportance" />
+          <ScalarProperty Name="SystemNotificationSensitivity" ColumnName="SystemNotificationSensitivity" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SystemNotificationHistories">
+      <EntityTypeMapping TypeName="LDTEModel.SystemNotificationHistory">
+        <MappingFragment StoreEntitySet="SystemNotificationHistory">
+          <ScalarProperty Name="SystemNotificationHistoryID" ColumnName="SystemNotificationHistoryID" />
+          <ScalarProperty Name="SystemNotificationID" ColumnName="SystemNotificationID" />
+          <ScalarProperty Name="SystemNotificationDate" ColumnName="SystemNotificationDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SystemNotificationRecipients">
+      <EntityTypeMapping TypeName="LDTEModel.SystemNotificationRecipient">
+        <MappingFragment StoreEntitySet="SystemNotificationRecipient">
+          <ScalarProperty Name="SystemNotificationRecipientID" ColumnName="SystemNotificationRecipientID" />
+          <ScalarProperty Name="SystemNotificationID" ColumnName="SystemNotificationID" />
+          <ScalarProperty Name="EntityHubID" ColumnName="EntityHubID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SystemSearches">
+      <EntityTypeMapping TypeName="LDTEModel.SystemSearch">
+        <MappingFragment StoreEntitySet="SystemSearch">
+          <ScalarProperty Name="SystemSearchID" ColumnName="SystemSearchID" />
+          <ScalarProperty Name="SystemSearchName" ColumnName="SystemSearchName" />
+          <ScalarProperty Name="SystemSearchCode" ColumnName="SystemSearchCode" />
+          <ScalarProperty Name="SystemSearchAlias" ColumnName="SystemSearchAlias" />
+          <ScalarProperty Name="SystemSearchDescription" ColumnName="SystemSearchDescription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SystemSearchParameters">
+      <EntityTypeMapping TypeName="LDTEModel.SystemSearchParameter">
+        <MappingFragment StoreEntitySet="SystemSearchParameter">
+          <ScalarProperty Name="SystemSearchParameterID" ColumnName="SystemSearchParameterID" />
+          <ScalarProperty Name="SystemSearchID" ColumnName="SystemSearchID" />
+          <ScalarProperty Name="SystemSearchParameterAlias" ColumnName="SystemSearchParameterAlias" />
+          <ScalarProperty Name="SystemSearchParameterText" ColumnName="SystemSearchParameterText" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SystemSearchSystemFunctions">
+      <EntityTypeMapping TypeName="LDTEModel.SystemSearchSystemFunction">
+        <MappingFragment StoreEntitySet="SystemSearchSystemFunction">
+          <ScalarProperty Name="SystemSearchSystemFunctionID" ColumnName="SystemSearchSystemFunctionID" />
+          <ScalarProperty Name="SystemSearchID" ColumnName="SystemSearchID" />
+          <ScalarProperty Name="SystemFunctionID" ColumnName="SystemFunctionID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Users">
       <EntityTypeMapping TypeName="LDTEModel.User">
-        <MappingFragment StoreEntitySet="Users">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="PrefixName" ColumnName="PrefixName" />
           <ScalarProperty Name="FirstName" ColumnName="FirstName" />
           <ScalarProperty Name="LastName" ColumnName="LastName" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+          <ScalarProperty Name="SuffixName" ColumnName="SuffixName" />
+          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+          <ScalarProperty Name="Login" ColumnName="Login" />
           <ScalarProperty Name="Password" ColumnName="Password" />
-          <ScalarProperty Name="PhoneWork" ColumnName="PhoneWork" />
-          <ScalarProperty Name="PhoneMobile" ColumnName="PhoneMobile" />
+          <ScalarProperty Name="SecurityHint" ColumnName="SecurityHint" />
+          <ScalarProperty Name="SecurityAnswer" ColumnName="SecurityAnswer" />
+          <ScalarProperty Name="PasswordDate" ColumnName="PasswordDate" />
+          <ScalarProperty Name="LockoutFlag" ColumnName="LockoutFlag" />
+          <ScalarProperty Name="InactiveDate" ColumnName="InactiveDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="UsersGroups">
-      <EntityTypeMapping TypeName="LDTEModel.UsersGroup">
-        <MappingFragment StoreEntitySet="UsersGroups">
-          <ScalarProperty Name="UsersGroupsID" ColumnName="UsersGroupsID" />
+    <EntitySetMapping Name="UserAddresses">
+      <EntityTypeMapping TypeName="LDTEModel.UserAddress">
+        <MappingFragment StoreEntitySet="UserAddress">
+          <ScalarProperty Name="PrimaryFlag" ColumnName="PrimaryFlag" />
+          <ScalarProperty Name="UserAddressID" ColumnName="UserAddressID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="AddressTypeID" ColumnName="AddressTypeID" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="AddressDetail" ColumnName="AddressDetail" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserGroups">
+      <EntityTypeMapping TypeName="LDTEModel.UserGroup">
+        <MappingFragment StoreEntitySet="UserGroup">
+          <ScalarProperty Name="UserGroupID" ColumnName="UserGroupID" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="GroupID" ColumnName="GroupID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="UserHistories">
+      <EntityTypeMapping TypeName="LDTEModel.UserHistory">
+        <MappingFragment StoreEntitySet="UserHistory">
+          <ScalarProperty Name="UserHistoryID" ColumnName="UserHistoryID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="EffectiveDate" ColumnName="EffectiveDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserLoginAttempts">
+      <EntityTypeMapping TypeName="LDTEModel.UserLoginAttempt">
+        <MappingFragment StoreEntitySet="UserLoginAttempt">
+          <ScalarProperty Name="UserLoginAttemptID" ColumnName="UserLoginAttemptID" />
+          <ScalarProperty Name="LoginName" ColumnName="LoginName" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="AttemptDate" ColumnName="AttemptDate" />
+          <ScalarProperty Name="SuccessFlag" ColumnName="SuccessFlag" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserPhones">
+      <EntityTypeMapping TypeName="LDTEModel.UserPhone">
+        <MappingFragment StoreEntitySet="UserPhone">
+          <ScalarProperty Name="PrimaryFlag" ColumnName="PrimaryFlag" />
+          <ScalarProperty Name="UserPhoneID" ColumnName="UserPhoneID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="PhoneTypeID" ColumnName="PhoneTypeID" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="PhoneExtension" ColumnName="PhoneExtension" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserEmails">
+      <EntityTypeMapping TypeName="LDTEModel.UserEmail">
+        <MappingFragment StoreEntitySet="UserEmail">
+          <ScalarProperty Name="PrimaryFlag" ColumnName="PrimaryFlag" />
+          <ScalarProperty Name="UserEmailID" ColumnName="UserEmailID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="EmailTypeID" ColumnName="EmailTypeID" />
+          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrganizationAddresses">
+      <EntityTypeMapping TypeName="LDTEModel.OrganizationAddress">
+        <MappingFragment StoreEntitySet="OrganizationAddress">
+          <ScalarProperty Name="PrimaryFlag" ColumnName="PrimaryFlag" />
+          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="AddressDetail" ColumnName="AddressDetail" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="AddressTypeID" ColumnName="AddressTypeID" />
+          <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
+          <ScalarProperty Name="OrganizationAddressID" ColumnName="OrganizationAddressID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrganizationPhones">
+      <EntityTypeMapping TypeName="LDTEModel.OrganizationPhone">
+        <MappingFragment StoreEntitySet="OrganizationPhone">
+          <ScalarProperty Name="PrimaryFlag" ColumnName="PrimaryFlag" />
+          <ScalarProperty Name="PhoneExtension" ColumnName="PhoneExtension" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="PhoneTypeID" ColumnName="PhoneTypeID" />
+          <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
+          <ScalarProperty Name="OrganizationPhoneID" ColumnName="OrganizationPhoneID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SystemFunctionMessages">
+      <EntityTypeMapping TypeName="LDTEModel.SystemFunctionMessage">
+        <MappingFragment StoreEntitySet="SystemFunctionMessage">
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="SystemMessageText" ColumnName="SystemMessageText" />
+          <ScalarProperty Name="SystemMessageType" ColumnName="SystemMessageType" />
+          <ScalarProperty Name="SystemFunctionID" ColumnName="SystemFunctionID" />
+          <ScalarProperty Name="SystemFunctionMessageID" ColumnName="SystemFunctionMessageID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="spGroupAvailableUser" FunctionName="LDTEModel.Store.spGroupAvailableUser">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="LDTEModel.spGroupAvailableUser_Result">
+          <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+          <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+          <ScalarProperty Name="GroupCode" ColumnName="GroupCode" />
+          <ScalarProperty Name="GroupAlias" ColumnName="GroupAlias" />
+          <ScalarProperty Name="GroupDescription" ColumnName="GroupDescription" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spSystemPermissionRefresh" FunctionName="LDTEModel.Store.spSystemPermissionRefresh" />
+    <FunctionImportMapping FunctionImportName="spUserAvailableGroup" FunctionName="LDTEModel.Store.spUserAvailableGroup">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="LDTEModel.spUserAvailableGroup_Result">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="PrefixName" ColumnName="PrefixName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+          <ScalarProperty Name="SuffixName" ColumnName="SuffixName" />
+          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+          <ScalarProperty Name="Login" ColumnName="Login" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spUserGroupFilterGroup" FunctionName="LDTEModel.Store.spUserGroupFilterGroup">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="LDTEModel.spUserGroupFilterGroup_Result">
+          <ScalarProperty Name="UserGroupID" ColumnName="UserGroupID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Login" ColumnName="Login" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spUserGroupFilterUser" FunctionName="LDTEModel.Store.spUserGroupFilterUser">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="LDTEModel.spUserGroupFilterUser_Result">
+          <ScalarProperty Name="UserGroupID" ColumnName="UserGroupID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+          <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+          <ScalarProperty Name="GroupCode" ColumnName="GroupCode" />
+          <ScalarProperty Name="GroupAlias" ColumnName="GroupAlias" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

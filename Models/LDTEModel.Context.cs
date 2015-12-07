@@ -12,6 +12,8 @@ namespace LDTE_Web.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class LDTEEntities : DbContext
     {
@@ -25,9 +27,77 @@ namespace LDTE_Web.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<AddressType> AddressTypes { get; set; }
+        public virtual DbSet<EmailType> EmailTypes { get; set; }
         public virtual DbSet<Group> Groups { get; set; }
-        public virtual DbSet<Permission> Permissions { get; set; }
+        public virtual DbSet<GroupPermission> GroupPermissions { get; set; }
+        public virtual DbSet<Organization> Organizations { get; set; }
+        public virtual DbSet<Personnel> Personnels { get; set; }
+        public virtual DbSet<PhoneType> PhoneTypes { get; set; }
+        public virtual DbSet<Position> Positions { get; set; }
+        public virtual DbSet<PositionGroup> PositionGroups { get; set; }
+        public virtual DbSet<SystemDomain> SystemDomains { get; set; }
+        public virtual DbSet<SystemDomainModule> SystemDomainModules { get; set; }
+        public virtual DbSet<SystemFunction> SystemFunctions { get; set; }
+        public virtual DbSet<SystemFunctionObject> SystemFunctionObjects { get; set; }
+        public virtual DbSet<SystemModule> SystemModules { get; set; }
+        public virtual DbSet<SystemNavigation> SystemNavigations { get; set; }
+        public virtual DbSet<SystemNotification> SystemNotifications { get; set; }
+        public virtual DbSet<SystemNotificationHistory> SystemNotificationHistories { get; set; }
+        public virtual DbSet<SystemNotificationRecipient> SystemNotificationRecipients { get; set; }
+        public virtual DbSet<SystemSearch> SystemSearches { get; set; }
+        public virtual DbSet<SystemSearchParameter> SystemSearchParameters { get; set; }
+        public virtual DbSet<SystemSearchSystemFunction> SystemSearchSystemFunctions { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<UsersGroup> UsersGroups { get; set; }
+        public virtual DbSet<UserAddress> UserAddresses { get; set; }
+        public virtual DbSet<UserGroup> UserGroups { get; set; }
+        public virtual DbSet<UserHistory> UserHistories { get; set; }
+        public virtual DbSet<UserLoginAttempt> UserLoginAttempts { get; set; }
+        public virtual DbSet<UserPhone> UserPhones { get; set; }
+        public virtual DbSet<UserEmail> UserEmails { get; set; }
+        public virtual DbSet<OrganizationAddress> OrganizationAddresses { get; set; }
+        public virtual DbSet<OrganizationPhone> OrganizationPhones { get; set; }
+        public virtual DbSet<SystemFunctionMessage> SystemFunctionMessages { get; set; }
+    
+        public virtual ObjectResult<spGroupAvailableUser_Result> spGroupAvailableUser(Nullable<int> userID)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGroupAvailableUser_Result>("spGroupAvailableUser", userIDParameter);
+        }
+    
+        public virtual int spSystemPermissionRefresh()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spSystemPermissionRefresh");
+        }
+    
+        public virtual ObjectResult<spUserAvailableGroup_Result> spUserAvailableGroup(Nullable<int> groupID)
+        {
+            var groupIDParameter = groupID.HasValue ?
+                new ObjectParameter("GroupID", groupID) :
+                new ObjectParameter("GroupID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spUserAvailableGroup_Result>("spUserAvailableGroup", groupIDParameter);
+        }
+    
+        public virtual ObjectResult<spUserGroupFilterGroup_Result> spUserGroupFilterGroup(Nullable<int> groupID)
+        {
+            var groupIDParameter = groupID.HasValue ?
+                new ObjectParameter("GroupID", groupID) :
+                new ObjectParameter("GroupID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spUserGroupFilterGroup_Result>("spUserGroupFilterGroup", groupIDParameter);
+        }
+    
+        public virtual ObjectResult<spUserGroupFilterUser_Result> spUserGroupFilterUser(Nullable<int> userID)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spUserGroupFilterUser_Result>("spUserGroupFilterUser", userIDParameter);
+        }
     }
 }

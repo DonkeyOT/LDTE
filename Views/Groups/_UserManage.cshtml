@@ -3,44 +3,40 @@
 
 @{
     //User Groups coming over in Group 'cause PFM
-    var user = new User();
+    var userout = Model.UserGroups.ToList();
+
+
+    var itemsout = userout.Select(i => new SelectListItem
+    {
+        Value = i.UserGroupID.ToString(),
+        Text = i.User.DisplayName.ToString()
+    });
+
+
 }
 
 
-<!-- /.row -->
-<div class="row">
-    <div class="col-lg-6">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-             @Html.DisplayNameFor(model => user.DisplayName)
-            </div>
+  
+@using (Html.BeginForm("DeleteUserGroup", "Groups", FormMethod.Post, new { id = "this-form", name = "this-form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.GroupID)
             <!-- /.panel-heading -->
-            <div class="panel-body">
-                <div class="dataTable_wrapper">
-                    <table class="table">
-                        <tr>
-                            <th>
-                                @Html.DisplayFor(model => model.Name)
-                            </th>
-                            <th></th>
-                        </tr>
-                        @foreach (var item in Model.UsersGroups)
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.User.DisplayName)
-                                </td>
-                                <td>
-                                    @*@Html.ActionLink("Delete", "DeleteUserGroup", new { id = item.UsersGroupsID })*@
-                                </td>
-                            </tr>
-                        }
-                    </table>
-                </div>
-            </div>
+    <div class="col-sm-1">
+        <div class="form-group">
+            <input type="submit" value="<<" class="btn btn-default" />
         </div>
     </div>
-</div>
+    
+    <div class="col-lg-5">
+        <div class="form-group">
+            <label>Member In Group</label><br/>
+            @Html.ListBox("outid", itemsout, new { @class = "form-control", Multiple = "multiple", size = "5"  })
+        </div>
+    </div>
+   
+         
+}
 
 
 

@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DataPumpModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="ClientID" />
+    </Key>
+    <Property Name="ClientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ClientName" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="ClientAlias" Type="varchar" MaxLength="10" />
+    <Property Name="ClientReference" Type="varchar" MaxLength="25" />
+    <Property Name="ClientDescription" Type="varchar" MaxLength="250" />
+    <Property Name="Address" Type="varchar" MaxLength="250" />
+    <Property Name="City" Type="varchar" MaxLength="150" />
+    <Property Name="State" Type="varchar" MaxLength="2" />
+    <Property Name="ZipCode" Type="varchar" MaxLength="5" />
+    <Property Name="OutOfPocketFlag" Type="bit" Nullable="false" />
+    <Property Name="DeductibleFlag" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ClientAccountGroup">
+    <Key>
+      <PropertyRef Name="ClientAccountGroupID" />
+    </Key>
+    <Property Name="ClientAccountGroupID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ClientID" Type="int" Nullable="false" />
+    <Property Name="NetworkID" Type="int" Nullable="false" />
+    <Property Name="ClientAccountGroupName" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="ClientAccountGroupCode" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="Carrier" Type="varchar" MaxLength="25" />
+    <Property Name="AccountIdentifier" Type="varchar" MaxLength="25" />
+    <Property Name="GroupIdentifier" Type="varchar" MaxLength="25" />
+    <Property Name="ClientAccountGroupAlias" Type="varchar" MaxLength="25" />
+    <Property Name="PlanCode" Type="varchar" MaxLength="25" />
+    <Property Name="PlanAlias" Type="varchar" MaxLength="25" />
+    <Property Name="EligibilityFlag" Type="bit" Nullable="false" />
+    <Property Name="OutOfPocketFlag" Type="bit" Nullable="false" />
+    <Property Name="DeductibleFlag" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ClientAccountGroupCriteria">
+    <Key>
+      <PropertyRef Name="ClientAccountGroupCriteriaID" />
+    </Key>
+    <Property Name="ClientAccountGroupCriteriaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ClientAccountGroupID" Type="int" Nullable="false" />
+    <Property Name="ClientAccountGroupCriteriaTypeID" Type="int" Nullable="false" />
+    <Property Name="ClientAccountGroupCriteriaCode" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="ClientAccountGroupCriteriaAlias" Type="varchar" MaxLength="25" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ClientAccountGroupCriteriaType">
+    <Key>
+      <PropertyRef Name="ClientAccountGroupCriteriaTypeID" />
+    </Key>
+    <Property Name="ClientAccountGroupCriteriaTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ClientAccountGroupCriteriaTypeName" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="ClientAccountGroupCriteriaTypeCode" Type="varchar" MaxLength="25" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ClientAccountGroupRoutine">
+    <Key>
+      <PropertyRef Name="ClientAccountGroupRoutineID" />
+    </Key>
+    <Property Name="ClientAccountGroupRoutineID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ClientAccountGroupID" Type="int" Nullable="false" />
+    <Property Name="RoutineID" Type="int" Nullable="false" />
+    <Property Name="InactiveDate" Type="date" />
+  </EntityType>
+  <EntityType Name="Network">
+    <Key>
+      <PropertyRef Name="NetworkID" />
+    </Key>
+    <Property Name="NetworkID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NetworkName" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="NetworkCode" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="NetworkReference" Type="varchar" MaxLength="5" />
+    <Property Name="NetworkAlias" Type="varchar" MaxLength="25" />
+    <Property Name="EligibilityHeader" Type="char" MaxLength="15" />
+    <Property Name="EligibilityCode" Type="varchar" MaxLength="25" />
+    <Property Name="EligibilityAlias" Type="varchar" MaxLength="50" />
+    <Property Name="EligibilityReference" Type="varchar" MaxLength="25" />
+    <Property Name="EligibilityDelimiter" Type="varchar" MaxLength="1" />
+    <Property Name="EligibilitySenderCode" Type="char" MaxLength="15" />
+    <Property Name="EligibilitySenderAlias" Type="varchar" MaxLength="25" />
+    <Property Name="EligibilitySenderReference" Type="varchar" MaxLength="25" />
+    <Property Name="EligibilityPendingDays" Type="int" />
+    <Property Name="EligibilityTerminationDays" Type="int" />
+    <Property Name="ClaimAlias" Type="varchar" MaxLength="25" />
+    <Property Name="ClaimPrimary" Type="varchar" MaxLength="25" />
+    <Property Name="ClaimSecondary" Type="varchar" MaxLength="25" />
+    <Property Name="AccumulatorAlias" Type="varchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="Routine">
+    <Key>
+      <PropertyRef Name="RoutineID" />
+    </Key>
+    <Property Name="RoutineID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoutineName" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="RoutineCode" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="RoutineDescription" Type="varchar" MaxLength="250" />
+    <Property Name="TargetDate" Type="date" />
+    <Property Name="NextScheduleDate" Type="datetime" />
+    <Property Name="LastRunDate" Type="datetime" />
+    <Property Name="ScheduleCycleHours" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RoutineTask">
+    <Key>
+      <PropertyRef Name="RoutineTaskID" />
+    </Key>
+    <Property Name="RoutineTaskID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoutineID" Type="int" Nullable="false" />
+    <Property Name="RoutineTaskType" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="SourceName" Type="varchar" MaxLength="250" />
+    <Property Name="DestinationName" Type="varchar" MaxLength="250" />
+    <Property Name="RoutineProcedureName" Type="varchar" MaxLength="250" />
+    <Property Name="RoutineJobName" Type="varchar" MaxLength="250" />
+    <Property Name="SortOrder" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RoutineType">
+    <Key>
+      <PropertyRef Name="RoutineTypeID" />
+    </Key>
+    <Property Name="RoutineTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoutineTypeName" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="RoutineTypeCode" Type="varchar" MaxLength="25" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_ClientAccountGroup_Client">
+    <End Role="Client" Type="Self.Client" Multiplicity="1" />
+    <End Role="ClientAccountGroup" Type="Self.ClientAccountGroup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="ClientID" />
+      </Principal>
+      <Dependent Role="ClientAccountGroup">
+        <PropertyRef Name="ClientID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClientAccountGroup_Network">
+    <End Role="Network" Type="Self.Network" Multiplicity="1" />
+    <End Role="ClientAccountGroup" Type="Self.ClientAccountGroup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Network">
+        <PropertyRef Name="NetworkID" />
+      </Principal>
+      <Dependent Role="ClientAccountGroup">
+        <PropertyRef Name="NetworkID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClientAccountGroupRoutine_ClientAccountGroup">
+    <End Role="ClientAccountGroup" Type="Self.ClientAccountGroup" Multiplicity="1" />
+    <End Role="ClientAccountGroupRoutine" Type="Self.ClientAccountGroupRoutine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ClientAccountGroup">
+        <PropertyRef Name="ClientAccountGroupID" />
+      </Principal>
+      <Dependent Role="ClientAccountGroupRoutine">
+        <PropertyRef Name="ClientAccountGroupID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClientAccountGroupRoutine_Routine">
+    <End Role="Routine" Type="Self.Routine" Multiplicity="1" />
+    <End Role="ClientAccountGroupRoutine" Type="Self.ClientAccountGroupRoutine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Routine">
+        <PropertyRef Name="RoutineID" />
+      </Principal>
+      <Dependent Role="ClientAccountGroupRoutine">
+        <PropertyRef Name="RoutineID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoutineTask_Routine">
+    <End Role="Routine" Type="Self.Routine" Multiplicity="1" />
+    <End Role="RoutineTask" Type="Self.RoutineTask" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Routine">
+        <PropertyRef Name="RoutineID" />
+      </Principal>
+      <Dependent Role="RoutineTask">
+        <PropertyRef Name="RoutineID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoutineType_RoutineType">
+    <End Role="RoutineType" Type="Self.RoutineType" Multiplicity="1" />
+    <End Role="RoutineType1" Type="Self.RoutineType" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="RoutineType">
+        <PropertyRef Name="RoutineTypeID" />
+      </Principal>
+      <Dependent Role="RoutineType1">
+        <PropertyRef Name="RoutineTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DataPumpModelStoreContainer">
+    <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ClientAccountGroup" EntityType="Self.ClientAccountGroup" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ClientAccountGroupCriteria" EntityType="Self.ClientAccountGroupCriteria" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ClientAccountGroupCriteriaType" EntityType="Self.ClientAccountGroupCriteriaType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ClientAccountGroupRoutine" EntityType="Self.ClientAccountGroupRoutine" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Network" EntityType="Self.Network" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Routine" EntityType="Self.Routine" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RoutineTask" EntityType="Self.RoutineTask" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RoutineType" EntityType="Self.RoutineType" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_ClientAccountGroup_Client" Association="Self.FK_ClientAccountGroup_Client">
+      <End Role="Client" EntitySet="Client" />
+      <End Role="ClientAccountGroup" EntitySet="ClientAccountGroup" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClientAccountGroup_Network" Association="Self.FK_ClientAccountGroup_Network">
+      <End Role="Network" EntitySet="Network" />
+      <End Role="ClientAccountGroup" EntitySet="ClientAccountGroup" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClientAccountGroupRoutine_ClientAccountGroup" Association="Self.FK_ClientAccountGroupRoutine_ClientAccountGroup">
+      <End Role="ClientAccountGroup" EntitySet="ClientAccountGroup" />
+      <End Role="ClientAccountGroupRoutine" EntitySet="ClientAccountGroupRoutine" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClientAccountGroupRoutine_Routine" Association="Self.FK_ClientAccountGroupRoutine_Routine">
+      <End Role="Routine" EntitySet="Routine" />
+      <End Role="ClientAccountGroupRoutine" EntitySet="ClientAccountGroupRoutine" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoutineTask_Routine" Association="Self.FK_RoutineTask_Routine">
+      <End Role="Routine" EntitySet="Routine" />
+      <End Role="RoutineTask" EntitySet="RoutineTask" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoutineType_RoutineType" Association="Self.FK_RoutineType_RoutineType">
+      <End Role="RoutineType" EntitySet="RoutineType" />
+      <End Role="RoutineType1" EntitySet="RoutineType" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

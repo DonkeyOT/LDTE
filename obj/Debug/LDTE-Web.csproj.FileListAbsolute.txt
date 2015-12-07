@@ -66,4 +66,3 @@
 \\vmware-host\Shared Folders\Documents\Visual Studio 2015\Projects\LDTE-Web\LDTE-Web\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 \\vmware-host\Shared Folders\Documents\Visual Studio 2015\Projects\LDTE-Web\LDTE-Web\obj\Debug\LDTE-Web.dll
 \\vmware-host\Shared Folders\Documents\Visual Studio 2015\Projects\LDTE-Web\LDTE-Web\obj\Debug\LDTE-Web.pdb
-\\vmware-host\Shared Folders\Documents\Visual Studio 2015\Projects\LDTE-Web\LDTE-Web\obj\Debug\LDTE-Web.csprojResolveAssemblyReference.cache

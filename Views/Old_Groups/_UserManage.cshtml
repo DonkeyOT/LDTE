@@ -1,0 +1,46 @@
+﻿@model LDTE_Web.Models.Group
+@using LDTE_Web.Models
+
+@{
+    //User Groups coming over in Group 'cause PFM
+    var user = new User();
+}
+
+
+<!-- /.row -->
+<div class="row">
+    <div class="col-lg-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+             @Html.DisplayNameFor(model => user.DisplayName)
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="dataTable_wrapper">
+                    <table class="table">
+                        <tr>
+                            <th>
+                                @Html.DisplayFor(model => model.Name)
+                            </th>
+                            <th></th>
+                        </tr>
+                        @foreach (var item in Model.UsersGroups)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.User.DisplayName)
+                                </td>
+                                <td>
+                                    @*@Html.ActionLink("Delete", "DeleteUserGroup", new { id = item.UsersGroupsID })*@
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

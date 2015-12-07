@@ -1,99 +1,900 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="LDTEModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AddressType">
+    <Key>
+      <PropertyRef Name="AddressTypeID" />
+    </Key>
+    <Property Name="AddressTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AddressTypeCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="UserAddresses" Relationship="Self.FK_UserAddress_AddressType" FromRole="AddressType" ToRole="UserAddress" />
+    <Property Name="AddressTypeName" Type="String" Nullable="false" MaxLength="125" FixedLength="false" Unicode="false" />
+    <Property Name="AddressTypeAlias" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="OrganizationAddresses" Relationship="LDTEModel.FK_OrganizationAddress_AddressType" FromRole="AddressType" ToRole="OrganizationAddress" />
+  </EntityType>
+  <EntityType Name="EmailType">
+    <Key>
+      <PropertyRef Name="EmailTypeID" />
+    </Key>
+    <Property Name="EmailTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmailTypeCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="UserEmails" Relationship="Self.FK_UserEmail_EmailType" FromRole="EmailType" ToRole="UserEmail" />
+    <Property Name="EmailTypeName" Type="String" Nullable="false" MaxLength="125" FixedLength="false" Unicode="false" />
+    <Property Name="EmailTypeAlias" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
+  </EntityType>
   <EntityType Name="Group">
     <Key>
       <PropertyRef Name="GroupID" />
     </Key>
     <Property Name="GroupID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Permissions" Relationship="Self.FK_Permissions_Groups" FromRole="Groups" ToRole="Permissions" />
-    <NavigationProperty Name="UsersGroups" Relationship="Self.FK_UsersGroups_Groups" FromRole="Groups" ToRole="UsersGroups" />
+    <Property Name="GroupName" Type="String" MaxLength="125" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="GroupCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="GroupAlias" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
+    <Property Name="GroupDescription" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="GroupPermissions" Relationship="Self.FK_GroupPermission_Group" FromRole="Group" ToRole="GroupPermission" />
+    <NavigationProperty Name="PositionGroups" Relationship="Self.FK_PositionGroup_Group" FromRole="Group" ToRole="PositionGroup" />
+    <NavigationProperty Name="UserGroups" Relationship="Self.FK_UserGroup_Group" FromRole="Group" ToRole="UserGroup" />
   </EntityType>
-  <EntityType Name="Permission">
+  <EntityType Name="GroupPermission">
     <Key>
-      <PropertyRef Name="PermissionID" />
+      <PropertyRef Name="GroupPermissionID" />
     </Key>
-    <Property Name="PermissionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Name" Type="Int32" Nullable="false" />
+    <Property Name="GroupPermissionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="GroupID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Group" Relationship="Self.FK_Permissions_Groups" FromRole="Permissions" ToRole="Groups" />
+    <Property Name="SystemFunctionID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Group" Relationship="Self.FK_GroupPermission_Group" FromRole="GroupPermission" ToRole="Group" />
+    <NavigationProperty Name="SystemFunction" Relationship="Self.FK_GroupPermission_SystemFunction" FromRole="GroupPermission" ToRole="SystemFunction" />
+  </EntityType>
+  <EntityType Name="Organization">
+    <Key>
+      <PropertyRef Name="OrganizationID" />
+    </Key>
+    <Property Name="OrganizationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrganizationName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="OrganizationCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="OrganizationAlias" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
+    <Property Name="MasterAccount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="MasterPassword" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="MasterPosition" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="InactiveDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="OrganizationAddresses" Relationship="LDTEModel.FK_OrganizationAddress_Organization" FromRole="Organization" ToRole="OrganizationAddress" />
+    <NavigationProperty Name="OrganizationPhone" Relationship="LDTEModel.FK_OrganizationPhone_Organization" FromRole="Organization" ToRole="OrganizationPhone" />
+  </EntityType>
+  <EntityType Name="Personnel">
+    <Key>
+      <PropertyRef Name="PersonnelID" />
+    </Key>
+    <Property Name="PersonnelID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EntityHubID" Type="Int32" Nullable="false" />
+    <Property Name="PositionID" Type="Int32" Nullable="false" />
+    <Property Name="EffectiveDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CeaseDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Position" Relationship="Self.FK_Personnel_Position" FromRole="Personnel" ToRole="Position" />
+  </EntityType>
+  <EntityType Name="PhoneType">
+    <Key>
+      <PropertyRef Name="PhoneTypeID" />
+    </Key>
+    <Property Name="PhoneTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PhoneTypeCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="UserPhones" Relationship="Self.FK_UserPhone_PhoneType" FromRole="PhoneType" ToRole="UserPhone" />
+    <Property Name="PhoneTypeName" Type="String" Nullable="false" MaxLength="125" FixedLength="false" Unicode="false" />
+    <Property Name="PhoneTypeAlias" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="OrganizationPhones" Relationship="LDTEModel.FK_OrganizationPhone_PhoneType" FromRole="PhoneType" ToRole="OrganizationPhone" />
+  </EntityType>
+  <EntityType Name="Position">
+    <Key>
+      <PropertyRef Name="PositionID" />
+    </Key>
+    <Property Name="PositionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EntityHubID" Type="Int32" Nullable="false" />
+    <Property Name="PositionName" Type="String" MaxLength="125" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PositionCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PositionAlias" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
+    <Property Name="InactiveDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Personnels" Relationship="Self.FK_Personnel_Position" FromRole="Position" ToRole="Personnel" />
+    <NavigationProperty Name="PositionGroups" Relationship="Self.FK_PositionGroup_Position" FromRole="Position" ToRole="PositionGroup" />
+  </EntityType>
+  <EntityType Name="PositionGroup">
+    <Key>
+      <PropertyRef Name="PositionGroupID" />
+    </Key>
+    <Property Name="PositionGroupID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PositionID" Type="Int32" Nullable="false" />
+    <Property Name="GroupID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Group" Relationship="Self.FK_PositionGroup_Group" FromRole="PositionGroup" ToRole="Group" />
+    <NavigationProperty Name="Position" Relationship="Self.FK_PositionGroup_Position" FromRole="PositionGroup" ToRole="Position" />
+  </EntityType>
+  <EntityType Name="SystemDomain">
+    <Key>
+      <PropertyRef Name="SystemDomainID" />
+    </Key>
+    <Property Name="SystemDomainID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SystemDomainName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="SystemDomainTitle" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="SystemDomainImage" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="SystemDomainFooter" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="SystemDomainDefaultAction" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="SystemDomainModules" Relationship="Self.FK_SystemDomainModule_SystemDomain" FromRole="SystemDomain" ToRole="SystemDomainModule" />
+  </EntityType>
+  <EntityType Name="SystemDomainModule">
+    <Key>
+      <PropertyRef Name="SystemDomainModuleID" />
+    </Key>
+    <Property Name="SystemDomainModuleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SystemDomainID" Type="Int32" Nullable="false" />
+    <Property Name="SystemModuleID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="SystemDomain" Relationship="Self.FK_SystemDomainModule_SystemDomain" FromRole="SystemDomainModule" ToRole="SystemDomain" />
+    <NavigationProperty Name="SystemModule" Relationship="Self.FK_SystemDomainModule_SystemModule" FromRole="SystemDomainModule" ToRole="SystemModule" />
+  </EntityType>
+  <EntityType Name="SystemFunction">
+    <Key>
+      <PropertyRef Name="SystemFunctionID" />
+    </Key>
+    <Property Name="SystemFunctionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SystemNavigationID" Type="Int32" Nullable="false" />
+    <Property Name="SystemFunctionName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SystemFunctionCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SystemFunctionAlias" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
+    <Property Name="SystemFunctionAction" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SystemFunctionDescription" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="NavigationFlag" Type="Boolean" Nullable="false" />
+    <Property Name="SortOrder" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="GroupPermissions" Relationship="Self.FK_GroupPermission_SystemFunction" FromRole="SystemFunction" ToRole="GroupPermission" />
+    <NavigationProperty Name="SystemNavigation" Relationship="Self.FK_SystemFunction_SystemNavigation" FromRole="SystemFunction" ToRole="SystemNavigation" />
+    <NavigationProperty Name="SystemFunctionObjects" Relationship="Self.FK_SystemFunctionObject_SystemFunction" FromRole="SystemFunction" ToRole="SystemFunctionObject" />
+    <NavigationProperty Name="SystemSearchSystemFunctions" Relationship="Self.FK_SystemSearchSystemFunction_SystemFunction" FromRole="SystemFunction" ToRole="SystemSearchSystemFunction" />
+    <NavigationProperty Name="SystemFunctionMessages" Relationship="LDTEModel.FK_SystemFunctionMessage_SystemFunction" FromRole="SystemFunction" ToRole="SystemFunctionMessage" />
+  </EntityType>
+  <EntityType Name="SystemFunctionObject">
+    <Key>
+      <PropertyRef Name="SystemFunctionObjectID" />
+    </Key>
+    <Property Name="SystemFunctionObjectID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SystemFunctionID" Type="Int32" Nullable="false" />
+    <Property Name="SystemFunctionObjectType" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
+    <Property Name="SystemFunctionObjectTarget" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
+    <Property Name="SystemFunctionObjectAlias" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="SystemFunctionObjectAction" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="SortOrder" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="SystemFunction" Relationship="Self.FK_SystemFunctionObject_SystemFunction" FromRole="SystemFunctionObject" ToRole="SystemFunction" />
+  </EntityType>
+  <EntityType Name="SystemModule">
+    <Key>
+      <PropertyRef Name="SystemModuleID" />
+    </Key>
+    <Property Name="SystemModuleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SystemModuleName" Type="String" MaxLength="125" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SystemModuleCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SystemModuleAlias" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
+    <Property Name="SystemModuleDescription" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="SystemDomainModules" Relationship="Self.FK_SystemDomainModule_SystemModule" FromRole="SystemModule" ToRole="SystemDomainModule" />
+    <NavigationProperty Name="SystemNavigations" Relationship="Self.FK_SystemNavigation_SystemModule" FromRole="SystemModule" ToRole="SystemNavigation" />
+  </EntityType>
+  <EntityType Name="SystemNavigation">
+    <Key>
+      <PropertyRef Name="SystemNavigationID" />
+    </Key>
+    <Property Name="SystemNavigationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SystemModuleID" Type="Int32" Nullable="false" />
+    <Property Name="SystemNavigationName" Type="String" MaxLength="125" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SystemNavigationCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SystemNavigationAlias" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
+    <Property Name="SortOrder" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="SystemFunctions" Relationship="Self.FK_SystemFunction_SystemNavigation" FromRole="SystemNavigation" ToRole="SystemFunction" />
+    <NavigationProperty Name="SystemModule" Relationship="Self.FK_SystemNavigation_SystemModule" FromRole="SystemNavigation" ToRole="SystemModule" />
+  </EntityType>
+  <EntityType Name="SystemNotification">
+    <Key>
+      <PropertyRef Name="SystemNotificationID" />
+    </Key>
+    <Property Name="SystemNotificationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SystemNotificationName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SystemNotificationCode" Type="String" MaxLength="75" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SystemNotificationProfile" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="SystemNotificationReplyEmail" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="SystemNotificationSubject" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="SystemNotificationBody" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="SystemNotificationBodyFormat" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="SystemNotificationImportance" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="SystemNotificationSensitivity" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="SystemNotificationHistories" Relationship="Self.FK_SystemNotificationHistory_SystemNotification" FromRole="SystemNotification" ToRole="SystemNotificationHistory" />
+  </EntityType>
+  <EntityType Name="SystemNotificationHistory">
+    <Key>
+      <PropertyRef Name="SystemNotificationHistoryID" />
+    </Key>
+    <Property Name="SystemNotificationHistoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SystemNotificationID" Type="Int32" Nullable="false" />
+    <Property Name="SystemNotificationDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="SystemNotification" Relationship="Self.FK_SystemNotificationHistory_SystemNotification" FromRole="SystemNotificationHistory" ToRole="SystemNotification" />
+  </EntityType>
+  <EntityType Name="SystemNotificationRecipient">
+    <Key>
+      <PropertyRef Name="SystemNotificationRecipientID" />
+    </Key>
+    <Property Name="SystemNotificationRecipientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SystemNotificationID" Type="Int32" Nullable="false" />
+    <Property Name="EntityHubID" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SystemSearch">
+    <Key>
+      <PropertyRef Name="SystemSearchID" />
+    </Key>
+    <Property Name="SystemSearchID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SystemSearchName" Type="String" MaxLength="125" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SystemSearchCode" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SystemSearchAlias" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
+    <Property Name="SystemSearchDescription" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="SystemSearchParameters" Relationship="Self.FK_SystemSearchParameter_SystemSearch" FromRole="SystemSearch" ToRole="SystemSearchParameter" />
+    <NavigationProperty Name="SystemSearchSystemFunctions" Relationship="Self.FK_SystemSearchSystemFunction_SystemSearch" FromRole="SystemSearch" ToRole="SystemSearchSystemFunction" />
+  </EntityType>
+  <EntityType Name="SystemSearchParameter">
+    <Key>
+      <PropertyRef Name="SystemSearchParameterID" />
+    </Key>
+    <Property Name="SystemSearchParameterID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SystemSearchID" Type="Int32" Nullable="false" />
+    <Property Name="SystemSearchParameterAlias" Type="String" MaxLength="125" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SystemSearchParameterText" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SortOrder" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="SystemSearch" Relationship="Self.FK_SystemSearchParameter_SystemSearch" FromRole="SystemSearchParameter" ToRole="SystemSearch" />
+  </EntityType>
+  <EntityType Name="SystemSearchSystemFunction">
+    <Key>
+      <PropertyRef Name="SystemSearchSystemFunctionID" />
+    </Key>
+    <Property Name="SystemSearchSystemFunctionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SystemSearchID" Type="Int32" Nullable="false" />
+    <Property Name="SystemFunctionID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="SystemFunction" Relationship="Self.FK_SystemSearchSystemFunction_SystemFunction" FromRole="SystemSearchSystemFunction" ToRole="SystemFunction" />
+    <NavigationProperty Name="SystemSearch" Relationship="Self.FK_SystemSearchSystemFunction_SystemSearch" FromRole="SystemSearchSystemFunction" ToRole="SystemSearch" />
   </EntityType>
   <EntityType Name="User">
     <Key>
       <PropertyRef Name="UserID" />
     </Key>
     <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="FirstName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="LastName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="PhoneWork" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
-    <Property Name="PhoneMobile" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="UsersGroups" Relationship="Self.FK_UsersGroups_Users" FromRole="Users" ToRole="UsersGroups" />
+    <Property Name="PrefixName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="75" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MiddleName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="SuffixName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Login" Type="String" MaxLength="125" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SecurityHint" Type="String" MaxLength="75" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SecurityAnswer" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PasswordDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LockoutFlag" Type="Boolean" Nullable="false" />
+    <Property Name="InactiveDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="UserAddresses" Relationship="Self.FK_UserAddress_User" FromRole="User" ToRole="UserAddress" />
+    <NavigationProperty Name="UserEmails" Relationship="Self.FK_UserEmail_User" FromRole="User" ToRole="UserEmail" />
+    <NavigationProperty Name="UserGroups" Relationship="Self.FK_UserGroup_User" FromRole="User" ToRole="UserGroup" />
+    <NavigationProperty Name="UserPhones" Relationship="Self.FK_UserPhone_User" FromRole="User" ToRole="UserPhone" />
+    <Property Name="DisplayName" Type="String" Nullable="false" MaxLength="126" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
   </EntityType>
-  <EntityType Name="UsersGroup">
+  <EntityType Name="UserAddress">
     <Key>
-      <PropertyRef Name="UsersGroupsID" />
+      <PropertyRef Name="UserAddressID" />
     </Key>
-    <Property Name="UsersGroupsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserAddressID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="AddressTypeID" Type="Int32" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="125" FixedLength="false" Unicode="false" />
+    <Property Name="AddressDetail" Type="String" MaxLength="125" FixedLength="false" Unicode="false" />
+    <Property Name="City" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
+    <Property Name="State" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="ZipCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="AddressType" Relationship="Self.FK_UserAddress_AddressType" FromRole="UserAddress" ToRole="AddressType" />
+    <NavigationProperty Name="User" Relationship="Self.FK_UserAddress_User" FromRole="UserAddress" ToRole="User" />
+    <Property Name="PrimaryFlag" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserGroup">
+    <Key>
+      <PropertyRef Name="UserGroupID" />
+    </Key>
+    <Property Name="UserGroupID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="UserID" Type="Int32" Nullable="false" />
     <Property Name="GroupID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Group" Relationship="Self.FK_UsersGroups_Groups" FromRole="UsersGroups" ToRole="Groups" />
-    <NavigationProperty Name="User" Relationship="Self.FK_UsersGroups_Users" FromRole="UsersGroups" ToRole="Users" />
+    <NavigationProperty Name="Group" Relationship="Self.FK_UserGroup_Group" FromRole="UserGroup" ToRole="Group" />
+    <NavigationProperty Name="User" Relationship="Self.FK_UserGroup_User" FromRole="UserGroup" ToRole="User" />
   </EntityType>
-  <Association Name="FK_Permissions_Groups">
-    <End Role="Groups" Type="Self.Group" Multiplicity="1" />
-    <End Role="Permissions" Type="Self.Permission" Multiplicity="*" />
+  <EntityType Name="UserHistory">
+    <Key>
+      <PropertyRef Name="UserHistoryID" />
+    </Key>
+    <Property Name="UserHistoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="125" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EffectiveDate" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="UserLoginAttempt">
+    <Key>
+      <PropertyRef Name="UserLoginAttemptID" />
+    </Key>
+    <Property Name="UserLoginAttemptID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LoginName" Type="String" MaxLength="125" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UserID" Type="Int32" />
+    <Property Name="AttemptDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="SuccessFlag" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserPhone">
+    <Key>
+      <PropertyRef Name="UserPhoneID" />
+    </Key>
+    <Property Name="UserPhoneID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="PhoneTypeID" Type="Int32" Nullable="false" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PhoneExtension" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="PhoneType" Relationship="Self.FK_UserPhone_PhoneType" FromRole="UserPhone" ToRole="PhoneType" />
+    <NavigationProperty Name="User" Relationship="Self.FK_UserPhone_User" FromRole="UserPhone" ToRole="User" />
+    <Property Name="PrimaryFlag" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserEmail">
+    <Key>
+      <PropertyRef Name="UserEmailID" />
+    </Key>
+    <Property Name="UserEmailID" Type="Int32" Nullable="false" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="EmailTypeID" Type="Int32" Nullable="false" />
+    <Property Name="EmailAddress" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="EmailType" Relationship="Self.FK_UserEmail_EmailType" FromRole="UserEmail" ToRole="EmailType" />
+    <NavigationProperty Name="User" Relationship="Self.FK_UserEmail_User" FromRole="UserEmail" ToRole="User" />
+    <Property Name="PrimaryFlag" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_UserAddress_AddressType">
+    <End Role="AddressType" Type="Self.AddressType" Multiplicity="1" />
+    <End Role="UserAddress" Type="Self.UserAddress" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Groups">
+      <Principal Role="AddressType">
+        <PropertyRef Name="AddressTypeID" />
+      </Principal>
+      <Dependent Role="UserAddress">
+        <PropertyRef Name="AddressTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserEmail_EmailType">
+    <End Role="EmailType" Type="Self.EmailType" Multiplicity="1" />
+    <End Role="UserEmail" Type="Self.UserEmail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmailType">
+        <PropertyRef Name="EmailTypeID" />
+      </Principal>
+      <Dependent Role="UserEmail">
+        <PropertyRef Name="EmailTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GroupPermission_Group">
+    <End Role="Group" Type="Self.Group" Multiplicity="1" />
+    <End Role="GroupPermission" Type="Self.GroupPermission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group">
         <PropertyRef Name="GroupID" />
       </Principal>
-      <Dependent Role="Permissions">
+      <Dependent Role="GroupPermission">
         <PropertyRef Name="GroupID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_UsersGroups_Groups">
-    <End Role="Groups" Type="Self.Group" Multiplicity="1" />
-    <End Role="UsersGroups" Type="Self.UsersGroup" Multiplicity="*" />
+  <Association Name="FK_PositionGroup_Group">
+    <End Role="Group" Type="Self.Group" Multiplicity="1" />
+    <End Role="PositionGroup" Type="Self.PositionGroup" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Groups">
+      <Principal Role="Group">
         <PropertyRef Name="GroupID" />
       </Principal>
-      <Dependent Role="UsersGroups">
+      <Dependent Role="PositionGroup">
         <PropertyRef Name="GroupID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_UsersGroups_Users">
-    <End Role="Users" Type="Self.User" Multiplicity="1" />
-    <End Role="UsersGroups" Type="Self.UsersGroup" Multiplicity="*" />
+  <Association Name="FK_UserGroup_Group">
+    <End Role="Group" Type="Self.Group" Multiplicity="1" />
+    <End Role="UserGroup" Type="Self.UserGroup" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Users">
+      <Principal Role="Group">
+        <PropertyRef Name="GroupID" />
+      </Principal>
+      <Dependent Role="UserGroup">
+        <PropertyRef Name="GroupID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GroupPermission_SystemFunction">
+    <End Role="SystemFunction" Type="Self.SystemFunction" Multiplicity="1" />
+    <End Role="GroupPermission" Type="Self.GroupPermission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SystemFunction">
+        <PropertyRef Name="SystemFunctionID" />
+      </Principal>
+      <Dependent Role="GroupPermission">
+        <PropertyRef Name="SystemFunctionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Personnel_Position">
+    <End Role="Position" Type="Self.Position" Multiplicity="1" />
+    <End Role="Personnel" Type="Self.Personnel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Position">
+        <PropertyRef Name="PositionID" />
+      </Principal>
+      <Dependent Role="Personnel">
+        <PropertyRef Name="PositionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserPhone_PhoneType">
+    <End Role="PhoneType" Type="Self.PhoneType" Multiplicity="1" />
+    <End Role="UserPhone" Type="Self.UserPhone" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PhoneType">
+        <PropertyRef Name="PhoneTypeID" />
+      </Principal>
+      <Dependent Role="UserPhone">
+        <PropertyRef Name="PhoneTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PositionGroup_Position">
+    <End Role="Position" Type="Self.Position" Multiplicity="1" />
+    <End Role="PositionGroup" Type="Self.PositionGroup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Position">
+        <PropertyRef Name="PositionID" />
+      </Principal>
+      <Dependent Role="PositionGroup">
+        <PropertyRef Name="PositionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SystemDomainModule_SystemDomain">
+    <End Role="SystemDomain" Type="Self.SystemDomain" Multiplicity="1" />
+    <End Role="SystemDomainModule" Type="Self.SystemDomainModule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SystemDomain">
+        <PropertyRef Name="SystemDomainID" />
+      </Principal>
+      <Dependent Role="SystemDomainModule">
+        <PropertyRef Name="SystemDomainID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SystemDomainModule_SystemModule">
+    <End Role="SystemModule" Type="Self.SystemModule" Multiplicity="1" />
+    <End Role="SystemDomainModule" Type="Self.SystemDomainModule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SystemModule">
+        <PropertyRef Name="SystemModuleID" />
+      </Principal>
+      <Dependent Role="SystemDomainModule">
+        <PropertyRef Name="SystemModuleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SystemFunction_SystemNavigation">
+    <End Role="SystemNavigation" Type="Self.SystemNavigation" Multiplicity="1" />
+    <End Role="SystemFunction" Type="Self.SystemFunction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SystemNavigation">
+        <PropertyRef Name="SystemNavigationID" />
+      </Principal>
+      <Dependent Role="SystemFunction">
+        <PropertyRef Name="SystemNavigationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SystemFunctionObject_SystemFunction">
+    <End Role="SystemFunction" Type="Self.SystemFunction" Multiplicity="1" />
+    <End Role="SystemFunctionObject" Type="Self.SystemFunctionObject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SystemFunction">
+        <PropertyRef Name="SystemFunctionID" />
+      </Principal>
+      <Dependent Role="SystemFunctionObject">
+        <PropertyRef Name="SystemFunctionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SystemSearchSystemFunction_SystemFunction">
+    <End Role="SystemFunction" Type="Self.SystemFunction" Multiplicity="1" />
+    <End Role="SystemSearchSystemFunction" Type="Self.SystemSearchSystemFunction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SystemFunction">
+        <PropertyRef Name="SystemFunctionID" />
+      </Principal>
+      <Dependent Role="SystemSearchSystemFunction">
+        <PropertyRef Name="SystemFunctionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SystemNavigation_SystemModule">
+    <End Role="SystemModule" Type="Self.SystemModule" Multiplicity="1" />
+    <End Role="SystemNavigation" Type="Self.SystemNavigation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SystemModule">
+        <PropertyRef Name="SystemModuleID" />
+      </Principal>
+      <Dependent Role="SystemNavigation">
+        <PropertyRef Name="SystemModuleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SystemNotificationHistory_SystemNotification">
+    <End Role="SystemNotification" Type="Self.SystemNotification" Multiplicity="1" />
+    <End Role="SystemNotificationHistory" Type="Self.SystemNotificationHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SystemNotification">
+        <PropertyRef Name="SystemNotificationID" />
+      </Principal>
+      <Dependent Role="SystemNotificationHistory">
+        <PropertyRef Name="SystemNotificationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SystemSearchParameter_SystemSearch">
+    <End Role="SystemSearch" Type="Self.SystemSearch" Multiplicity="1" />
+    <End Role="SystemSearchParameter" Type="Self.SystemSearchParameter" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SystemSearch">
+        <PropertyRef Name="SystemSearchID" />
+      </Principal>
+      <Dependent Role="SystemSearchParameter">
+        <PropertyRef Name="SystemSearchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SystemSearchSystemFunction_SystemSearch">
+    <End Role="SystemSearch" Type="Self.SystemSearch" Multiplicity="1" />
+    <End Role="SystemSearchSystemFunction" Type="Self.SystemSearchSystemFunction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SystemSearch">
+        <PropertyRef Name="SystemSearchID" />
+      </Principal>
+      <Dependent Role="SystemSearchSystemFunction">
+        <PropertyRef Name="SystemSearchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserAddress_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="UserAddress" Type="Self.UserAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
         <PropertyRef Name="UserID" />
       </Principal>
-      <Dependent Role="UsersGroups">
+      <Dependent Role="UserAddress">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserEmail_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="UserEmail" Type="Self.UserEmail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="UserEmail">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserGroup_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="UserGroup" Type="Self.UserGroup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="UserGroup">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserPhone_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="UserPhone" Type="Self.UserPhone" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="UserPhone">
         <PropertyRef Name="UserID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="LDTEEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AddressTypes" EntityType="Self.AddressType" />
+    <EntitySet Name="EmailTypes" EntityType="Self.EmailType" />
     <EntitySet Name="Groups" EntityType="Self.Group" />
-    <EntitySet Name="Permissions" EntityType="Self.Permission" />
+    <EntitySet Name="GroupPermissions" EntityType="Self.GroupPermission" />
+    <EntitySet Name="Organizations" EntityType="Self.Organization" />
+    <EntitySet Name="Personnels" EntityType="Self.Personnel" />
+    <EntitySet Name="PhoneTypes" EntityType="Self.PhoneType" />
+    <EntitySet Name="Positions" EntityType="Self.Position" />
+    <EntitySet Name="PositionGroups" EntityType="Self.PositionGroup" />
+    <EntitySet Name="SystemDomains" EntityType="Self.SystemDomain" />
+    <EntitySet Name="SystemDomainModules" EntityType="Self.SystemDomainModule" />
+    <EntitySet Name="SystemFunctions" EntityType="Self.SystemFunction" />
+    <EntitySet Name="SystemFunctionObjects" EntityType="Self.SystemFunctionObject" />
+    <EntitySet Name="SystemModules" EntityType="Self.SystemModule" />
+    <EntitySet Name="SystemNavigations" EntityType="Self.SystemNavigation" />
+    <EntitySet Name="SystemNotifications" EntityType="Self.SystemNotification" />
+    <EntitySet Name="SystemNotificationHistories" EntityType="Self.SystemNotificationHistory" />
+    <EntitySet Name="SystemNotificationRecipients" EntityType="Self.SystemNotificationRecipient" />
+    <EntitySet Name="SystemSearches" EntityType="Self.SystemSearch" />
+    <EntitySet Name="SystemSearchParameters" EntityType="Self.SystemSearchParameter" />
+    <EntitySet Name="SystemSearchSystemFunctions" EntityType="Self.SystemSearchSystemFunction" />
     <EntitySet Name="Users" EntityType="Self.User" />
-    <EntitySet Name="UsersGroups" EntityType="Self.UsersGroup" />
-    <AssociationSet Name="FK_Permissions_Groups" Association="Self.FK_Permissions_Groups">
-      <End Role="Groups" EntitySet="Groups" />
-      <End Role="Permissions" EntitySet="Permissions" />
+    <EntitySet Name="UserAddresses" EntityType="Self.UserAddress" />
+    <EntitySet Name="UserGroups" EntityType="Self.UserGroup" />
+    <EntitySet Name="UserHistories" EntityType="Self.UserHistory" />
+    <EntitySet Name="UserLoginAttempts" EntityType="Self.UserLoginAttempt" />
+    <EntitySet Name="UserPhones" EntityType="Self.UserPhone" />
+    <EntitySet Name="UserEmails" EntityType="Self.UserEmail" />
+    <AssociationSet Name="FK_UserAddress_AddressType" Association="Self.FK_UserAddress_AddressType">
+      <End Role="AddressType" EntitySet="AddressTypes" />
+      <End Role="UserAddress" EntitySet="UserAddresses" />
     </AssociationSet>
-    <AssociationSet Name="FK_UsersGroups_Groups" Association="Self.FK_UsersGroups_Groups">
-      <End Role="Groups" EntitySet="Groups" />
-      <End Role="UsersGroups" EntitySet="UsersGroups" />
+    <AssociationSet Name="FK_UserEmail_EmailType" Association="Self.FK_UserEmail_EmailType">
+      <End Role="EmailType" EntitySet="EmailTypes" />
+      <End Role="UserEmail" EntitySet="UserEmails" />
     </AssociationSet>
-    <AssociationSet Name="FK_UsersGroups_Users" Association="Self.FK_UsersGroups_Users">
-      <End Role="Users" EntitySet="Users" />
-      <End Role="UsersGroups" EntitySet="UsersGroups" />
+    <AssociationSet Name="FK_GroupPermission_Group" Association="Self.FK_GroupPermission_Group">
+      <End Role="Group" EntitySet="Groups" />
+      <End Role="GroupPermission" EntitySet="GroupPermissions" />
     </AssociationSet>
+    <AssociationSet Name="FK_PositionGroup_Group" Association="Self.FK_PositionGroup_Group">
+      <End Role="Group" EntitySet="Groups" />
+      <End Role="PositionGroup" EntitySet="PositionGroups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserGroup_Group" Association="Self.FK_UserGroup_Group">
+      <End Role="Group" EntitySet="Groups" />
+      <End Role="UserGroup" EntitySet="UserGroups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GroupPermission_SystemFunction" Association="Self.FK_GroupPermission_SystemFunction">
+      <End Role="SystemFunction" EntitySet="SystemFunctions" />
+      <End Role="GroupPermission" EntitySet="GroupPermissions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Personnel_Position" Association="Self.FK_Personnel_Position">
+      <End Role="Position" EntitySet="Positions" />
+      <End Role="Personnel" EntitySet="Personnels" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserPhone_PhoneType" Association="Self.FK_UserPhone_PhoneType">
+      <End Role="PhoneType" EntitySet="PhoneTypes" />
+      <End Role="UserPhone" EntitySet="UserPhones" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PositionGroup_Position" Association="Self.FK_PositionGroup_Position">
+      <End Role="Position" EntitySet="Positions" />
+      <End Role="PositionGroup" EntitySet="PositionGroups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SystemDomainModule_SystemDomain" Association="Self.FK_SystemDomainModule_SystemDomain">
+      <End Role="SystemDomain" EntitySet="SystemDomains" />
+      <End Role="SystemDomainModule" EntitySet="SystemDomainModules" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SystemDomainModule_SystemModule" Association="Self.FK_SystemDomainModule_SystemModule">
+      <End Role="SystemModule" EntitySet="SystemModules" />
+      <End Role="SystemDomainModule" EntitySet="SystemDomainModules" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SystemFunction_SystemNavigation" Association="Self.FK_SystemFunction_SystemNavigation">
+      <End Role="SystemNavigation" EntitySet="SystemNavigations" />
+      <End Role="SystemFunction" EntitySet="SystemFunctions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SystemFunctionObject_SystemFunction" Association="Self.FK_SystemFunctionObject_SystemFunction">
+      <End Role="SystemFunction" EntitySet="SystemFunctions" />
+      <End Role="SystemFunctionObject" EntitySet="SystemFunctionObjects" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SystemSearchSystemFunction_SystemFunction" Association="Self.FK_SystemSearchSystemFunction_SystemFunction">
+      <End Role="SystemFunction" EntitySet="SystemFunctions" />
+      <End Role="SystemSearchSystemFunction" EntitySet="SystemSearchSystemFunctions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SystemNavigation_SystemModule" Association="Self.FK_SystemNavigation_SystemModule">
+      <End Role="SystemModule" EntitySet="SystemModules" />
+      <End Role="SystemNavigation" EntitySet="SystemNavigations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SystemNotificationHistory_SystemNotification" Association="Self.FK_SystemNotificationHistory_SystemNotification">
+      <End Role="SystemNotification" EntitySet="SystemNotifications" />
+      <End Role="SystemNotificationHistory" EntitySet="SystemNotificationHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SystemSearchParameter_SystemSearch" Association="Self.FK_SystemSearchParameter_SystemSearch">
+      <End Role="SystemSearch" EntitySet="SystemSearches" />
+      <End Role="SystemSearchParameter" EntitySet="SystemSearchParameters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SystemSearchSystemFunction_SystemSearch" Association="Self.FK_SystemSearchSystemFunction_SystemSearch">
+      <End Role="SystemSearch" EntitySet="SystemSearches" />
+      <End Role="SystemSearchSystemFunction" EntitySet="SystemSearchSystemFunctions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserAddress_User" Association="Self.FK_UserAddress_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserAddress" EntitySet="UserAddresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserEmail_User" Association="Self.FK_UserEmail_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserEmail" EntitySet="UserEmails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserGroup_User" Association="Self.FK_UserGroup_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserGroup" EntitySet="UserGroups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserPhone_User" Association="Self.FK_UserPhone_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserPhone" EntitySet="UserPhones" />
+    </AssociationSet>
+    <EntitySet Name="OrganizationAddresses" EntityType="LDTEModel.OrganizationAddress" />
+    <EntitySet Name="OrganizationPhones" EntityType="LDTEModel.OrganizationPhone" />
+    <EntitySet Name="SystemFunctionMessages" EntityType="LDTEModel.SystemFunctionMessage" />
+    <AssociationSet Name="FK_OrganizationAddress_AddressType" Association="LDTEModel.FK_OrganizationAddress_AddressType">
+      <End Role="AddressType" EntitySet="AddressTypes" />
+      <End Role="OrganizationAddress" EntitySet="OrganizationAddresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrganizationAddress_Organization" Association="LDTEModel.FK_OrganizationAddress_Organization">
+      <End Role="Organization" EntitySet="Organizations" />
+      <End Role="OrganizationAddress" EntitySet="OrganizationAddresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrganizationPhone_Organization" Association="LDTEModel.FK_OrganizationPhone_Organization">
+      <End Role="Organization" EntitySet="Organizations" />
+      <End Role="OrganizationPhone" EntitySet="OrganizationPhones" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrganizationPhone_PhoneType" Association="LDTEModel.FK_OrganizationPhone_PhoneType">
+      <End Role="PhoneType" EntitySet="PhoneTypes" />
+      <End Role="OrganizationPhone" EntitySet="OrganizationPhones" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SystemFunctionMessage_SystemFunction" Association="LDTEModel.FK_SystemFunctionMessage_SystemFunction">
+      <End Role="SystemFunction" EntitySet="SystemFunctions" />
+      <End Role="SystemFunctionMessage" EntitySet="SystemFunctionMessages" />
+    </AssociationSet>
+    <FunctionImport Name="spGroupAvailableUser" ReturnType="Collection(LDTEModel.spGroupAvailableUser_Result)">
+      <Parameter Name="UserID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="spSystemPermissionRefresh" />
+    <FunctionImport Name="spUserAvailableGroup" ReturnType="Collection(LDTEModel.spUserAvailableGroup_Result)">
+      <Parameter Name="GroupID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="spUserGroupFilterGroup" ReturnType="Collection(LDTEModel.spUserGroupFilterGroup_Result)">
+      <Parameter Name="GroupID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="spUserGroupFilterUser" ReturnType="Collection(LDTEModel.spUserGroupFilterUser_Result)">
+      <Parameter Name="UserID" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
+  <EntityType Name="OrganizationAddress">
+    <Key>
+      <PropertyRef Name="OrganizationAddressID" />
+    </Key>
+    <Property Name="OrganizationAddressID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrganizationID" Type="Int32" Nullable="false" />
+    <Property Name="AddressTypeID" Type="Int32" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="125" FixedLength="false" Unicode="false" />
+    <Property Name="AddressDetail" Type="String" MaxLength="125" FixedLength="false" Unicode="false" />
+    <Property Name="City" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
+    <Property Name="State" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="ZipCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="PrimaryFlag" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="AddressType" Relationship="LDTEModel.FK_OrganizationAddress_AddressType" FromRole="OrganizationAddress" ToRole="AddressType" />
+    <NavigationProperty Name="Organization" Relationship="LDTEModel.FK_OrganizationAddress_Organization" FromRole="OrganizationAddress" ToRole="Organization" />
+  </EntityType>
+  <EntityType Name="OrganizationPhone">
+    <Key>
+      <PropertyRef Name="OrganizationPhoneID" />
+    </Key>
+    <Property Name="OrganizationPhoneID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrganizationID" Type="Int32" Nullable="false" />
+    <Property Name="PhoneTypeID" Type="Int32" Nullable="false" />
+    <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="PhoneExtension" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="PrimaryFlag" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Organization" Relationship="LDTEModel.FK_OrganizationPhone_Organization" FromRole="OrganizationPhone" ToRole="Organization" />
+    <NavigationProperty Name="PhoneType" Relationship="LDTEModel.FK_OrganizationPhone_PhoneType" FromRole="OrganizationPhone" ToRole="PhoneType" />
+  </EntityType>
+  <EntityType Name="SystemFunctionMessage">
+    <Key>
+      <PropertyRef Name="SystemFunctionMessageID" />
+    </Key>
+    <Property Name="SystemFunctionMessageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SystemFunctionID" Type="Int32" Nullable="false" />
+    <Property Name="SystemMessageType" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
+    <Property Name="SystemMessageText" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="SortOrder" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="SystemFunction" Relationship="LDTEModel.FK_SystemFunctionMessage_SystemFunction" FromRole="SystemFunctionMessage" ToRole="SystemFunction" />
+  </EntityType>
+  <Association Name="FK_OrganizationAddress_AddressType">
+    <End Type="LDTEModel.AddressType" Role="AddressType" Multiplicity="1" />
+    <End Type="LDTEModel.OrganizationAddress" Role="OrganizationAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AddressType">
+        <PropertyRef Name="AddressTypeID" />
+      </Principal>
+      <Dependent Role="OrganizationAddress">
+        <PropertyRef Name="AddressTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrganizationAddress_Organization">
+    <End Type="LDTEModel.Organization" Role="Organization" Multiplicity="1" />
+    <End Type="LDTEModel.OrganizationAddress" Role="OrganizationAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organization">
+        <PropertyRef Name="OrganizationID" />
+      </Principal>
+      <Dependent Role="OrganizationAddress">
+        <PropertyRef Name="OrganizationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrganizationPhone_Organization">
+    <End Type="LDTEModel.Organization" Role="Organization" Multiplicity="1" />
+    <End Type="LDTEModel.OrganizationPhone" Role="OrganizationPhone" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Organization">
+        <PropertyRef Name="OrganizationID" />
+      </Principal>
+      <Dependent Role="OrganizationPhone">
+        <PropertyRef Name="OrganizationPhoneID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrganizationPhone_PhoneType">
+    <End Type="LDTEModel.PhoneType" Role="PhoneType" Multiplicity="1" />
+    <End Type="LDTEModel.OrganizationPhone" Role="OrganizationPhone" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PhoneType">
+        <PropertyRef Name="PhoneTypeID" />
+      </Principal>
+      <Dependent Role="OrganizationPhone">
+        <PropertyRef Name="PhoneTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SystemFunctionMessage_SystemFunction">
+    <End Type="LDTEModel.SystemFunction" Role="SystemFunction" Multiplicity="1" />
+    <End Type="LDTEModel.SystemFunctionMessage" Role="SystemFunctionMessage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SystemFunction">
+        <PropertyRef Name="SystemFunctionID" />
+      </Principal>
+      <Dependent Role="SystemFunctionMessage">
+        <PropertyRef Name="SystemFunctionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="spGroupAvailableUser_Result">
+    <Property Type="Int32" Name="GroupID" Nullable="false" />
+    <Property Type="String" Name="GroupName" Nullable="false" MaxLength="125" />
+    <Property Type="String" Name="GroupCode" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="GroupAlias" Nullable="true" MaxLength="75" />
+    <Property Type="String" Name="GroupDescription" Nullable="true" MaxLength="250" />
+  </ComplexType>
+  <ComplexType Name="spUserAvailableGroup_Result">
+    <Property Type="Int32" Name="UserID" Nullable="false" />
+    <Property Type="String" Name="PrefixName" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="FirstName" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="LastName" Nullable="false" MaxLength="75" />
+    <Property Type="String" Name="MiddleName" Nullable="true" MaxLength="25" />
+    <Property Type="String" Name="SuffixName" Nullable="true" MaxLength="10" />
+    <Property Type="DateTime" Name="DateOfBirth" Nullable="false" />
+    <Property Type="String" Name="Login" Nullable="false" MaxLength="125" />
+    <Property Type="String" Name="FullName" Nullable="false" MaxLength="255" />
+  </ComplexType>
+  <ComplexType Name="spUserGroupFilterGroup_Result">
+    <Property Type="Int32" Name="UserGroupID" Nullable="false" />
+    <Property Type="Int32" Name="UserID" Nullable="false" />
+    <Property Type="Int32" Name="GroupID" Nullable="false" />
+    <Property Type="String" Name="FirstName" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="LastName" Nullable="false" MaxLength="75" />
+    <Property Type="String" Name="Login" Nullable="false" MaxLength="125" />
+    <Property Type="String" Name="FullName" Nullable="false" MaxLength="255" />
+  </ComplexType>
+  <ComplexType Name="spUserGroupFilterUser_Result">
+    <Property Type="Int32" Name="UserGroupID" Nullable="false" />
+    <Property Type="Int32" Name="UserID" Nullable="false" />
+    <Property Type="Int32" Name="GroupID" Nullable="false" />
+    <Property Type="String" Name="GroupName" Nullable="false" MaxLength="125" />
+    <Property Type="String" Name="GroupCode" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="GroupAlias" Nullable="true" MaxLength="75" />
+  </ComplexType>
 </Schema>

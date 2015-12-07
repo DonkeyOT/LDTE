@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DataPumpModelStoreContainer" CdmEntityContainer="DataPumpEntities">
+    <EntitySetMapping Name="Clients">
+      <EntityTypeMapping TypeName="DataPumpModel.Client">
+        <MappingFragment StoreEntitySet="Client">
+          <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+          <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="ClientAlias" ColumnName="ClientAlias" />
+          <ScalarProperty Name="ClientReference" ColumnName="ClientReference" />
+          <ScalarProperty Name="ClientDescription" ColumnName="ClientDescription" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+          <ScalarProperty Name="OutOfPocketFlag" ColumnName="OutOfPocketFlag" />
+          <ScalarProperty Name="DeductibleFlag" ColumnName="DeductibleFlag" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ClientAccountGroups">
+      <EntityTypeMapping TypeName="DataPumpModel.ClientAccountGroup">
+        <MappingFragment StoreEntitySet="ClientAccountGroup">
+          <ScalarProperty Name="ClientAccountGroupID" ColumnName="ClientAccountGroupID" />
+          <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+          <ScalarProperty Name="NetworkID" ColumnName="NetworkID" />
+          <ScalarProperty Name="ClientAccountGroupName" ColumnName="ClientAccountGroupName" />
+          <ScalarProperty Name="ClientAccountGroupCode" ColumnName="ClientAccountGroupCode" />
+          <ScalarProperty Name="Carrier" ColumnName="Carrier" />
+          <ScalarProperty Name="AccountIdentifier" ColumnName="AccountIdentifier" />
+          <ScalarProperty Name="GroupIdentifier" ColumnName="GroupIdentifier" />
+          <ScalarProperty Name="ClientAccountGroupAlias" ColumnName="ClientAccountGroupAlias" />
+          <ScalarProperty Name="PlanCode" ColumnName="PlanCode" />
+          <ScalarProperty Name="PlanAlias" ColumnName="PlanAlias" />
+          <ScalarProperty Name="EligibilityFlag" ColumnName="EligibilityFlag" />
+          <ScalarProperty Name="OutOfPocketFlag" ColumnName="OutOfPocketFlag" />
+          <ScalarProperty Name="DeductibleFlag" ColumnName="DeductibleFlag" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ClientAccountGroupCriterias">
+      <EntityTypeMapping TypeName="DataPumpModel.ClientAccountGroupCriteria">
+        <MappingFragment StoreEntitySet="ClientAccountGroupCriteria">
+          <ScalarProperty Name="ClientAccountGroupCriteriaID" ColumnName="ClientAccountGroupCriteriaID" />
+          <ScalarProperty Name="ClientAccountGroupID" ColumnName="ClientAccountGroupID" />
+          <ScalarProperty Name="ClientAccountGroupCriteriaTypeID" ColumnName="ClientAccountGroupCriteriaTypeID" />
+          <ScalarProperty Name="ClientAccountGroupCriteriaCode" ColumnName="ClientAccountGroupCriteriaCode" />
+          <ScalarProperty Name="ClientAccountGroupCriteriaAlias" ColumnName="ClientAccountGroupCriteriaAlias" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ClientAccountGroupCriteriaTypes">
+      <EntityTypeMapping TypeName="DataPumpModel.ClientAccountGroupCriteriaType">
+        <MappingFragment StoreEntitySet="ClientAccountGroupCriteriaType">
+          <ScalarProperty Name="ClientAccountGroupCriteriaTypeID" ColumnName="ClientAccountGroupCriteriaTypeID" />
+          <ScalarProperty Name="ClientAccountGroupCriteriaTypeName" ColumnName="ClientAccountGroupCriteriaTypeName" />
+          <ScalarProperty Name="ClientAccountGroupCriteriaTypeCode" ColumnName="ClientAccountGroupCriteriaTypeCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ClientAccountGroupRoutines">
+      <EntityTypeMapping TypeName="DataPumpModel.ClientAccountGroupRoutine">
+        <MappingFragment StoreEntitySet="ClientAccountGroupRoutine">
+          <ScalarProperty Name="ClientAccountGroupRoutineID" ColumnName="ClientAccountGroupRoutineID" />
+          <ScalarProperty Name="ClientAccountGroupID" ColumnName="ClientAccountGroupID" />
+          <ScalarProperty Name="RoutineID" ColumnName="RoutineID" />
+          <ScalarProperty Name="InactiveDate" ColumnName="InactiveDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Networks">
+      <EntityTypeMapping TypeName="DataPumpModel.Network">
+        <MappingFragment StoreEntitySet="Network">
+          <ScalarProperty Name="NetworkID" ColumnName="NetworkID" />
+          <ScalarProperty Name="NetworkName" ColumnName="NetworkName" />
+          <ScalarProperty Name="NetworkCode" ColumnName="NetworkCode" />
+          <ScalarProperty Name="NetworkReference" ColumnName="NetworkReference" />
+          <ScalarProperty Name="NetworkAlias" ColumnName="NetworkAlias" />
+          <ScalarProperty Name="EligibilityHeader" ColumnName="EligibilityHeader" />
+          <ScalarProperty Name="EligibilityCode" ColumnName="EligibilityCode" />
+          <ScalarProperty Name="EligibilityAlias" ColumnName="EligibilityAlias" />
+          <ScalarProperty Name="EligibilityReference" ColumnName="EligibilityReference" />
+          <ScalarProperty Name="EligibilityDelimiter" ColumnName="EligibilityDelimiter" />
+          <ScalarProperty Name="EligibilitySenderCode" ColumnName="EligibilitySenderCode" />
+          <ScalarProperty Name="EligibilitySenderAlias" ColumnName="EligibilitySenderAlias" />
+          <ScalarProperty Name="EligibilitySenderReference" ColumnName="EligibilitySenderReference" />
+          <ScalarProperty Name="EligibilityPendingDays" ColumnName="EligibilityPendingDays" />
+          <ScalarProperty Name="EligibilityTerminationDays" ColumnName="EligibilityTerminationDays" />
+          <ScalarProperty Name="ClaimAlias" ColumnName="ClaimAlias" />
+          <ScalarProperty Name="ClaimPrimary" ColumnName="ClaimPrimary" />
+          <ScalarProperty Name="ClaimSecondary" ColumnName="ClaimSecondary" />
+          <ScalarProperty Name="AccumulatorAlias" ColumnName="AccumulatorAlias" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Routines">
+      <EntityTypeMapping TypeName="DataPumpModel.Routine">
+        <MappingFragment StoreEntitySet="Routine">
+          <ScalarProperty Name="RoutineID" ColumnName="RoutineID" />
+          <ScalarProperty Name="RoutineName" ColumnName="RoutineName" />
+          <ScalarProperty Name="RoutineCode" ColumnName="RoutineCode" />
+          <ScalarProperty Name="RoutineDescription" ColumnName="RoutineDescription" />
+          <ScalarProperty Name="TargetDate" ColumnName="TargetDate" />
+          <ScalarProperty Name="NextScheduleDate" ColumnName="NextScheduleDate" />
+          <ScalarProperty Name="LastRunDate" ColumnName="LastRunDate" />
+          <ScalarProperty Name="ScheduleCycleHours" ColumnName="ScheduleCycleHours" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RoutineTasks">
+      <EntityTypeMapping TypeName="DataPumpModel.RoutineTask">
+        <MappingFragment StoreEntitySet="RoutineTask">
+          <ScalarProperty Name="RoutineTaskID" ColumnName="RoutineTaskID" />
+          <ScalarProperty Name="RoutineID" ColumnName="RoutineID" />
+          <ScalarProperty Name="RoutineTaskType" ColumnName="RoutineTaskType" />
+          <ScalarProperty Name="SourceName" ColumnName="SourceName" />
+          <ScalarProperty Name="DestinationName" ColumnName="DestinationName" />
+          <ScalarProperty Name="RoutineProcedureName" ColumnName="RoutineProcedureName" />
+          <ScalarProperty Name="RoutineJobName" ColumnName="RoutineJobName" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RoutineTypes">
+      <EntityTypeMapping TypeName="DataPumpModel.RoutineType">
+        <MappingFragment StoreEntitySet="RoutineType">
+          <ScalarProperty Name="RoutineTypeID" ColumnName="RoutineTypeID" />
+          <ScalarProperty Name="RoutineTypeName" ColumnName="RoutineTypeName" />
+          <ScalarProperty Name="RoutineTypeCode" ColumnName="RoutineTypeCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

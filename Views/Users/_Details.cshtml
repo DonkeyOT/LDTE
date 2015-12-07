@@ -1,0 +1,92 @@
+﻿@model LDTE_Web.Models.User
+@using LDTE_Web.Models
+
+<!-- Modal content-->
+<div class="modal-content">
+    <div class="modal-header">
+        <h4 class="modal-title">@Html.DisplayFor(model => model.DisplayName) Details</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div class="row">
+                <div class="col-lg-10">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PrefixName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.PrefixName, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                        </div>
+                        @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                        </div>
+                        @Html.LabelFor(model => model.MiddleName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.MiddleName, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.SuffixName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.SuffixName, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                        </div>
+                        @Html.LabelFor(model => model.DateOfBirth, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Login, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.Login, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                        </div>
+                        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.SecurityHint, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.SecurityHint, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                        </div>
+                        @Html.LabelFor(model => model.SecurityAnswer, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.SecurityAnswer, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PasswordDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.PasswordDate, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                        </div>
+                        @Html.LabelFor(model => model.LockoutFlag, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.LockoutFlag, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.InactiveDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.InactiveDate, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+    </div>
+</div>

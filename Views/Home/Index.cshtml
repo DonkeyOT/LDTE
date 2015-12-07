@@ -1,31 +1,245 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@using LDTE_Web.Models
+
+@{
+    ViewBag.Title = "LDTE System";
+    //User u = new User();
+    //if (Session["user"] != null)
+    //{
+
+    //    u = (User)Session["user"];
+    //}
+    //else
+    //{
+    //    Response.Redirect("../Account/Login");
+    //}
+
+}
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="page-header">LDTE System Dashboard @*@u.FirstName;*@
+            
+           </h3>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-clock-o fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">3</div>
+                            <div>Scheduled Orchestrations</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="schedules.html">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-bell fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">12</div>
+                            <div>Open Issues</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-yellow">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-warning fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">124</div>
+                            <div>Warnings</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-red">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-times fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">1</div>
+                            <div>Errors</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <i class="fa fa-dashboard fa-fw"></i> Orchestration Status
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                Past 7 Days
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                    <a href="#">Past 7 Days</a>
+                                </li>
+                                <li>
+                                    <a href="#">Past 30 Days</a>
+                                </li>
+                                <li>
+                                    <a href="#">Past 60 Days</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="#">Year to Date</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row show">
+                        <div class="col-md-12">
+                            <a href="results.html">Sample Data Flow #1: Daily Eligibility</a>
+                            <div class="row">
+                                <div class="col-md-1"><button type="button" class="btn btn-success btn-square btn-lg"><i class="fa fa-check"></i></button></div>
+                                <div class="col-md-1"><button type="button" class="btn btn-success btn-square btn-lg"><i class="fa fa-check"></i></button></div>
+                                <div class="col-md-1"><button type="button" class="btn btn-warning btn-square btn-lg"><i class="fa fa-warning"></i></button></div>
+                                <div class="col-md-1"><button type="button" class="btn btn-warning btn-square btn-lg"><i class="fa fa-warning"></i></button></div>
+                                <div class="col-md-1"><button type="button" class="btn btn-danger btn-square btn-lg"><i class="fa fa-times"></i></button></div>
+                                <div class="col-md-1"><button type="button" class="btn btn-danger btn-square btn-lg"><i class="fa fa-times"></i></button></div>
+                                <div class="col-md-1"><button type="button" class="btn btn-danger btn-square btn-lg"><i class="fa fa-times"></i></button></div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            Sample Data Flow #2: Weekly Claims
+                            <div class="row">
+                                <div class="col-md-1"><button type="button" class="btn btn-success btn-square btn-lg"><i class="fa fa-check"></i></button></div>
+                                <div class="col-md-1"><button type="button" class="btn btn-success btn-square btn-lg"><i class="fa fa-check"></i></button></div>
+                                <div class="col-md-1"><button type="button" class="btn btn-success btn-square btn-lg"><i class="fa fa-check"></i></button></div>
+                                <div class="col-md-1"><button type="button" class="btn btn-success btn-square btn-lg"><i class="fa fa-check"></i></button></div>
+                                <div class="col-md-1"><button type="button" class="btn btn-success btn-square btn-lg"><i class="fa fa-check"></i></button></div>
+                                <div class="col-md-1"><button type="button" class="btn btn-success btn-square btn-lg"><i class="fa fa-check"></i></button></div>
+                                <div class="col-md-1"><button type="button" class="btn btn-default btn-square btn-lg"><i class="fa fa-refresh"></i></button></div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            Sample Data Flow #3: Daily Accumulators
+                            <div class="row">
+                                <div class="col-md-1"><button type="button" class="btn btn-success btn-square btn-lg"><i class="fa fa-check"></i></button></div>
+                                <div class="col-md-1"><button type="button" class="btn btn-success btn-square btn-lg"><i class="fa fa-check"></i></button></div>
+                                <div class="col-md-1"><button type="button" class="btn btn-success btn-square btn-lg"><i class="fa fa-check"></i></button></div>
+                                <div class="col-md-1"><button type="button" class="btn btn-success btn-square btn-lg"><i class="fa fa-check"></i></button></div>
+                                <div class="col-md-1"><button type="button" class="btn btn-success btn-square btn-lg"><i class="fa fa-check"></i></button></div>
+                                <div class="col-md-1"><button type="button" class="btn btn-success btn-square btn-lg"><i class="fa fa-check"></i></button></div>
+                                <div class="col-md-1"><button type="button" class="btn btn-default btn-square btn-lg"><i class="fa fa-refresh"></i></button></div>
+                            </div>
+                        </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+                    </div>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+            <!-- /.panel -->
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-8 -->
+        <div class="col-lg-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <i class="fa fa-bell fa-fw"></i> My Issues
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-tasks fa-fw"></i> Support Case: 1223 Update
+                            <span class="pull-right text-muted small">
+                                <em>4 minutes ago</em>
+                            </span>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-tasks fa-fw"></i> TX/RX Error
+                            <span class="pull-right text-muted small">
+                                <em>20 minutes ago</em>
+                            </span>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-tasks fa-fw"></i> Ad Hoc: Routine Started
+                            <span class="pull-right text-muted small">
+                                <em>43 minutes ago</em>
+                            </span>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-tasks fa-fw"></i> Daily Schedule Complete
+                            <span class="pull-right text-muted small">
+                                <em>11:32 AM</em>
+                            </span>
+                        </a>
+
+                    </div>
+                    <!-- /.list-group -->
+                    <a href="#" class="btn btn-default btn-block">View All Alerts</a>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+            <!-- /.panel -->
+            <!-- /.panel .chat-panel -->
+        </div>
+        <!-- /.col-lg-4 -->
     </div>
-   <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
+    <!-- /.row -->
 </div>
+<!-- /#page-wrapper -->

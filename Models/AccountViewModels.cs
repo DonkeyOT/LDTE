@@ -49,9 +49,9 @@ namespace LDTE_Web.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "Login")]
+        
+        public string Login { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

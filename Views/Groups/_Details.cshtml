@@ -1,0 +1,40 @@
+﻿@model LDTE_Web.Models.Group
+@using LDTE_Web.Models
+
+<!-- Modal content-->
+<div class="modal-content">
+    <div class="modal-header">
+        <h4 class="modal-title">@Html.DisplayFor(model => model.GroupName) Details</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div class="row">
+                <div class="col-lg-10">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.GroupName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.GroupName, new { htmlAttributes = new { @class = "form-control", disabled = "disabled"} })
+                        </div>
+                        @Html.LabelFor(model => model.GroupCode, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.GroupCode, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.GroupAlias, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.GroupAlias, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                        </div>
+                        @Html.LabelFor(model => model.GroupDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.GroupDescription, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+    </div>
+</div>
+

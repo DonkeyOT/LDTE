@@ -1,93 +1,811 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="LDTEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityType Name="Groups">
+<Schema Namespace="LDTEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AddressType">
+    <Key>
+      <PropertyRef Name="AddressTypeID" />
+    </Key>
+    <Property Name="AddressTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AddressTypeName" Type="varchar" MaxLength="125" Nullable="false" />
+    <Property Name="AddressTypeCode" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="AddressTypeAlias" Type="varchar" MaxLength="75" />
+  </EntityType>
+  <EntityType Name="EmailType">
+    <Key>
+      <PropertyRef Name="EmailTypeID" />
+    </Key>
+    <Property Name="EmailTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmailTypeName" Type="varchar" MaxLength="125" Nullable="false" />
+    <Property Name="EmailTypeCode" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="EmailTypeAlias" Type="varchar" MaxLength="75" />
+  </EntityType>
+  <EntityType Name="Group">
     <Key>
       <PropertyRef Name="GroupID" />
     </Key>
     <Property Name="GroupID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="Description" Type="varchar" MaxLength="250" />
+    <Property Name="GroupName" Type="varchar" MaxLength="125" Nullable="false" />
+    <Property Name="GroupCode" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="GroupAlias" Type="varchar" MaxLength="75" />
+    <Property Name="GroupDescription" Type="varchar" MaxLength="250" />
   </EntityType>
-  <EntityType Name="Permissions">
+  <EntityType Name="GroupPermission">
     <Key>
-      <PropertyRef Name="PermissionID" />
+      <PropertyRef Name="GroupPermissionID" />
     </Key>
-    <Property Name="PermissionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="int" Nullable="false" />
+    <Property Name="GroupPermissionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GroupID" Type="int" Nullable="false" />
+    <Property Name="SystemFunctionID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Organization">
+    <Key>
+      <PropertyRef Name="OrganizationID" />
+    </Key>
+    <Property Name="OrganizationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrganizationName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="OrganizationCode" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="OrganizationAlias" Type="varchar" MaxLength="75" />
+    <Property Name="MasterAccount" Type="varchar" MaxLength="50" />
+    <Property Name="MasterPassword" Type="varchar" MaxLength="25" />
+    <Property Name="MasterPosition" Type="varchar" MaxLength="25" />
+    <Property Name="InactiveDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="OrganizationAddress">
+    <Key>
+      <PropertyRef Name="OrganizationAddressID" />
+    </Key>
+    <Property Name="OrganizationAddressID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrganizationID" Type="int" Nullable="false" />
+    <Property Name="AddressTypeID" Type="int" Nullable="false" />
+    <Property Name="Address" Type="varchar" MaxLength="125" />
+    <Property Name="AddressDetail" Type="varchar" MaxLength="125" />
+    <Property Name="City" Type="varchar" MaxLength="75" />
+    <Property Name="State" Type="varchar" MaxLength="2" />
+    <Property Name="ZipCode" Type="varchar" MaxLength="10" />
+    <Property Name="PrimaryFlag" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrganizationPhone">
+    <Key>
+      <PropertyRef Name="OrganizationPhoneID" />
+    </Key>
+    <Property Name="OrganizationPhoneID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrganizationID" Type="int" Nullable="false" />
+    <Property Name="PhoneTypeID" Type="int" Nullable="false" />
+    <Property Name="PhoneNumber" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="PhoneExtension" Type="varchar" MaxLength="25" />
+    <Property Name="PrimaryFlag" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Personnel">
+    <Key>
+      <PropertyRef Name="PersonnelID" />
+    </Key>
+    <Property Name="PersonnelID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EntityHubID" Type="int" Nullable="false" />
+    <Property Name="PositionID" Type="int" Nullable="false" />
+    <Property Name="EffectiveDate" Type="datetime" Nullable="false" />
+    <Property Name="CeaseDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PhoneType">
+    <Key>
+      <PropertyRef Name="PhoneTypeID" />
+    </Key>
+    <Property Name="PhoneTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PhoneTypeName" Type="varchar" MaxLength="125" Nullable="false" />
+    <Property Name="PhoneTypeCode" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="PhoneTypeAlias" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Position">
+    <Key>
+      <PropertyRef Name="PositionID" />
+    </Key>
+    <Property Name="PositionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EntityHubID" Type="int" Nullable="false" />
+    <Property Name="PositionName" Type="varchar" MaxLength="125" Nullable="false" />
+    <Property Name="PositionCode" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="PositionAlias" Type="varchar" MaxLength="75" />
+    <Property Name="InactiveDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PositionGroup">
+    <Key>
+      <PropertyRef Name="PositionGroupID" />
+    </Key>
+    <Property Name="PositionGroupID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PositionID" Type="int" Nullable="false" />
     <Property Name="GroupID" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="Users">
+  <EntityType Name="SystemDomain">
+    <Key>
+      <PropertyRef Name="SystemDomainID" />
+    </Key>
+    <Property Name="SystemDomainID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SystemDomainName" Type="varchar" MaxLength="250" />
+    <Property Name="SystemDomainTitle" Type="varchar" MaxLength="250" />
+    <Property Name="SystemDomainImage" Type="varchar" MaxLength="250" />
+    <Property Name="SystemDomainFooter" Type="varchar" MaxLength="250" />
+    <Property Name="SystemDomainDefaultAction" Type="varchar" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="SystemDomainModule">
+    <Key>
+      <PropertyRef Name="SystemDomainModuleID" />
+    </Key>
+    <Property Name="SystemDomainModuleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SystemDomainID" Type="int" Nullable="false" />
+    <Property Name="SystemModuleID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SystemFunction">
+    <Key>
+      <PropertyRef Name="SystemFunctionID" />
+    </Key>
+    <Property Name="SystemFunctionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SystemNavigationID" Type="int" Nullable="false" />
+    <Property Name="SystemFunctionName" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="SystemFunctionCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="SystemFunctionAlias" Type="varchar" MaxLength="75" />
+    <Property Name="SystemFunctionAction" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="SystemFunctionDescription" Type="varchar" MaxLength="250" />
+    <Property Name="NavigationFlag" Type="bit" Nullable="false" />
+    <Property Name="SortOrder" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SystemFunctionMessage">
+    <Key>
+      <PropertyRef Name="SystemFunctionMessageID" />
+    </Key>
+    <Property Name="SystemFunctionMessageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SystemFunctionID" Type="int" Nullable="false" />
+    <Property Name="SystemMessageType" Type="varchar" MaxLength="75" Nullable="false" />
+    <Property Name="SystemMessageText" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="SortOrder" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SystemFunctionObject">
+    <Key>
+      <PropertyRef Name="SystemFunctionObjectID" />
+    </Key>
+    <Property Name="SystemFunctionObjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SystemFunctionID" Type="int" Nullable="false" />
+    <Property Name="SystemFunctionObjectType" Type="varchar" MaxLength="75" />
+    <Property Name="SystemFunctionObjectTarget" Type="varchar" MaxLength="75" />
+    <Property Name="SystemFunctionObjectAlias" Type="varchar" MaxLength="150" />
+    <Property Name="SystemFunctionObjectAction" Type="varchar" MaxLength="150" />
+    <Property Name="SortOrder" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SystemModule">
+    <Key>
+      <PropertyRef Name="SystemModuleID" />
+    </Key>
+    <Property Name="SystemModuleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SystemModuleName" Type="varchar" MaxLength="125" Nullable="false" />
+    <Property Name="SystemModuleCode" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="SystemModuleAlias" Type="varchar" MaxLength="75" />
+    <Property Name="SystemModuleDescription" Type="varchar" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="SystemNavigation">
+    <Key>
+      <PropertyRef Name="SystemNavigationID" />
+    </Key>
+    <Property Name="SystemNavigationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SystemModuleID" Type="int" Nullable="false" />
+    <Property Name="SystemNavigationName" Type="varchar" MaxLength="125" Nullable="false" />
+    <Property Name="SystemNavigationCode" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="SystemNavigationAlias" Type="varchar" MaxLength="75" />
+    <Property Name="SortOrder" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SystemNotification">
+    <Key>
+      <PropertyRef Name="SystemNotificationID" />
+    </Key>
+    <Property Name="SystemNotificationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SystemNotificationName" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="SystemNotificationCode" Type="varchar" MaxLength="75" Nullable="false" />
+    <Property Name="SystemNotificationProfile" Type="varchar" MaxLength="255" />
+    <Property Name="SystemNotificationReplyEmail" Type="varchar" MaxLength="255" />
+    <Property Name="SystemNotificationSubject" Type="varchar" MaxLength="255" />
+    <Property Name="SystemNotificationBody" Type="varchar(max)" />
+    <Property Name="SystemNotificationBodyFormat" Type="varchar" MaxLength="20" />
+    <Property Name="SystemNotificationImportance" Type="varchar" MaxLength="6" />
+    <Property Name="SystemNotificationSensitivity" Type="varchar" MaxLength="12" />
+  </EntityType>
+  <EntityType Name="SystemNotificationHistory">
+    <Key>
+      <PropertyRef Name="SystemNotificationHistoryID" />
+    </Key>
+    <Property Name="SystemNotificationHistoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SystemNotificationID" Type="int" Nullable="false" />
+    <Property Name="SystemNotificationDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SystemNotificationRecipient">
+    <Key>
+      <PropertyRef Name="SystemNotificationRecipientID" />
+    </Key>
+    <Property Name="SystemNotificationRecipientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SystemNotificationID" Type="int" Nullable="false" />
+    <Property Name="EntityHubID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SystemSearch">
+    <Key>
+      <PropertyRef Name="SystemSearchID" />
+    </Key>
+    <Property Name="SystemSearchID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SystemSearchName" Type="varchar" MaxLength="125" Nullable="false" />
+    <Property Name="SystemSearchCode" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="SystemSearchAlias" Type="varchar" MaxLength="75" />
+    <Property Name="SystemSearchDescription" Type="varchar" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="SystemSearchParameter">
+    <Key>
+      <PropertyRef Name="SystemSearchParameterID" />
+    </Key>
+    <Property Name="SystemSearchParameterID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SystemSearchID" Type="int" Nullable="false" />
+    <Property Name="SystemSearchParameterAlias" Type="varchar" MaxLength="125" Nullable="false" />
+    <Property Name="SystemSearchParameterText" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="SortOrder" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SystemSearchSystemFunction">
+    <Key>
+      <PropertyRef Name="SystemSearchSystemFunctionID" />
+    </Key>
+    <Property Name="SystemSearchSystemFunctionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SystemSearchID" Type="int" Nullable="false" />
+    <Property Name="SystemFunctionID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User">
     <Key>
       <PropertyRef Name="UserID" />
     </Key>
     <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="FirstName" Type="varchar" MaxLength="25" Nullable="false" />
-    <Property Name="LastName" Type="varchar" MaxLength="25" Nullable="false" />
-    <Property Name="Email" Type="varchar" MaxLength="40" Nullable="false" />
-    <Property Name="Password" Type="varchar" MaxLength="50" />
-    <Property Name="PhoneWork" Type="varchar" MaxLength="11" />
-    <Property Name="PhoneMobile" Type="varchar" MaxLength="11" />
+    <Property Name="PrefixName" Type="varchar" MaxLength="10" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="varchar" MaxLength="75" Nullable="false" />
+    <Property Name="MiddleName" Type="varchar" MaxLength="25" />
+    <Property Name="SuffixName" Type="varchar" MaxLength="10" />
+    <Property Name="DateOfBirth" Type="date" Nullable="false" />
+    <Property Name="Login" Type="varchar" MaxLength="125" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="32" Nullable="false" />
+    <Property Name="SecurityHint" Type="varchar" MaxLength="75" Nullable="false" />
+    <Property Name="SecurityAnswer" Type="varchar" MaxLength="32" Nullable="false" />
+    <Property Name="PasswordDate" Type="datetime" Nullable="false" />
+    <Property Name="LockoutFlag" Type="bit" Nullable="false" />
+    <Property Name="InactiveDate" Type="datetime" />
+    <Property Name="DisplayName" Type="varchar" MaxLength="126" StoreGeneratedPattern="Computed" Nullable="false" />
   </EntityType>
-  <EntityType Name="UsersGroups">
+  <EntityType Name="UserAddress">
     <Key>
-      <PropertyRef Name="UsersGroupsID" />
+      <PropertyRef Name="UserAddressID" />
     </Key>
-    <Property Name="UsersGroupsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserAddressID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="AddressTypeID" Type="int" Nullable="false" />
+    <Property Name="Address" Type="varchar" MaxLength="125" />
+    <Property Name="AddressDetail" Type="varchar" MaxLength="125" />
+    <Property Name="City" Type="varchar" MaxLength="75" />
+    <Property Name="State" Type="varchar" MaxLength="2" />
+    <Property Name="ZipCode" Type="varchar" MaxLength="10" />
+    <Property Name="PrimaryFlag" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserEmail">
+    <Key>
+      <PropertyRef Name="UserEmailID" />
+    </Key>
+    <Property Name="UserEmailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="EmailTypeID" Type="int" Nullable="false" />
+    <Property Name="EmailAddress" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="PrimaryFlag" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserGroup">
+    <Key>
+      <PropertyRef Name="UserGroupID" />
+    </Key>
+    <Property Name="UserGroupID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="UserID" Type="int" Nullable="false" />
     <Property Name="GroupID" Type="int" Nullable="false" />
   </EntityType>
-  <Association Name="FK_Permissions_Groups">
-    <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
-    <End Role="Permissions" Type="Self.Permissions" Multiplicity="*" />
+  <EntityType Name="UserHistory">
+    <Key>
+      <PropertyRef Name="UserHistoryID" />
+    </Key>
+    <Property Name="UserHistoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="varchar" MaxLength="125" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="32" Nullable="false" />
+    <Property Name="EffectiveDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserLoginAttempt">
+    <Key>
+      <PropertyRef Name="UserLoginAttemptID" />
+    </Key>
+    <Property Name="UserLoginAttemptID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LoginName" Type="varchar" MaxLength="125" Nullable="false" />
+    <Property Name="UserID" Type="int" />
+    <Property Name="AttemptDate" Type="datetime" Nullable="false" />
+    <Property Name="SuccessFlag" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserPhone">
+    <Key>
+      <PropertyRef Name="UserPhoneID" />
+    </Key>
+    <Property Name="UserPhoneID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="PhoneTypeID" Type="int" Nullable="false" />
+    <Property Name="PhoneNumber" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="PhoneExtension" Type="varchar" MaxLength="20" />
+    <Property Name="PrimaryFlag" Type="bit" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_GroupPermission_Group">
+    <End Role="Group" Type="Self.Group" Multiplicity="1" />
+    <End Role="GroupPermission" Type="Self.GroupPermission" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Groups">
+      <Principal Role="Group">
         <PropertyRef Name="GroupID" />
       </Principal>
-      <Dependent Role="Permissions">
+      <Dependent Role="GroupPermission">
         <PropertyRef Name="GroupID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_UsersGroups_Groups">
-    <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
-    <End Role="UsersGroups" Type="Self.UsersGroups" Multiplicity="*" />
+  <Association Name="FK_GroupPermission_SystemFunction">
+    <End Role="SystemFunction" Type="Self.SystemFunction" Multiplicity="1" />
+    <End Role="GroupPermission" Type="Self.GroupPermission" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Groups">
+      <Principal Role="SystemFunction">
+        <PropertyRef Name="SystemFunctionID" />
+      </Principal>
+      <Dependent Role="GroupPermission">
+        <PropertyRef Name="SystemFunctionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrganizationAddress_AddressType">
+    <End Role="AddressType" Type="Self.AddressType" Multiplicity="1" />
+    <End Role="OrganizationAddress" Type="Self.OrganizationAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AddressType">
+        <PropertyRef Name="AddressTypeID" />
+      </Principal>
+      <Dependent Role="OrganizationAddress">
+        <PropertyRef Name="AddressTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrganizationAddress_Organization">
+    <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+    <End Role="OrganizationAddress" Type="Self.OrganizationAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organization">
+        <PropertyRef Name="OrganizationID" />
+      </Principal>
+      <Dependent Role="OrganizationAddress">
+        <PropertyRef Name="OrganizationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrganizationPhone_Organization">
+    <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+    <End Role="OrganizationPhone" Type="Self.OrganizationPhone" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Organization">
+        <PropertyRef Name="OrganizationID" />
+      </Principal>
+      <Dependent Role="OrganizationPhone">
+        <PropertyRef Name="OrganizationPhoneID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrganizationPhone_PhoneType">
+    <End Role="PhoneType" Type="Self.PhoneType" Multiplicity="1" />
+    <End Role="OrganizationPhone" Type="Self.OrganizationPhone" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PhoneType">
+        <PropertyRef Name="PhoneTypeID" />
+      </Principal>
+      <Dependent Role="OrganizationPhone">
+        <PropertyRef Name="PhoneTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Personnel_Position">
+    <End Role="Position" Type="Self.Position" Multiplicity="1" />
+    <End Role="Personnel" Type="Self.Personnel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Position">
+        <PropertyRef Name="PositionID" />
+      </Principal>
+      <Dependent Role="Personnel">
+        <PropertyRef Name="PositionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PositionGroup_Group">
+    <End Role="Group" Type="Self.Group" Multiplicity="1" />
+    <End Role="PositionGroup" Type="Self.PositionGroup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group">
         <PropertyRef Name="GroupID" />
       </Principal>
-      <Dependent Role="UsersGroups">
+      <Dependent Role="PositionGroup">
         <PropertyRef Name="GroupID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_UsersGroups_Users">
-    <End Role="Users" Type="Self.Users" Multiplicity="1" />
-    <End Role="UsersGroups" Type="Self.UsersGroups" Multiplicity="*" />
+  <Association Name="FK_PositionGroup_Position">
+    <End Role="Position" Type="Self.Position" Multiplicity="1" />
+    <End Role="PositionGroup" Type="Self.PositionGroup" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Users">
+      <Principal Role="Position">
+        <PropertyRef Name="PositionID" />
+      </Principal>
+      <Dependent Role="PositionGroup">
+        <PropertyRef Name="PositionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SystemDomainModule_SystemDomain">
+    <End Role="SystemDomain" Type="Self.SystemDomain" Multiplicity="1" />
+    <End Role="SystemDomainModule" Type="Self.SystemDomainModule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SystemDomain">
+        <PropertyRef Name="SystemDomainID" />
+      </Principal>
+      <Dependent Role="SystemDomainModule">
+        <PropertyRef Name="SystemDomainID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SystemDomainModule_SystemModule">
+    <End Role="SystemModule" Type="Self.SystemModule" Multiplicity="1" />
+    <End Role="SystemDomainModule" Type="Self.SystemDomainModule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SystemModule">
+        <PropertyRef Name="SystemModuleID" />
+      </Principal>
+      <Dependent Role="SystemDomainModule">
+        <PropertyRef Name="SystemModuleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SystemFunction_SystemNavigation">
+    <End Role="SystemNavigation" Type="Self.SystemNavigation" Multiplicity="1" />
+    <End Role="SystemFunction" Type="Self.SystemFunction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SystemNavigation">
+        <PropertyRef Name="SystemNavigationID" />
+      </Principal>
+      <Dependent Role="SystemFunction">
+        <PropertyRef Name="SystemNavigationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SystemFunctionMessage_SystemFunction">
+    <End Role="SystemFunction" Type="Self.SystemFunction" Multiplicity="1" />
+    <End Role="SystemFunctionMessage" Type="Self.SystemFunctionMessage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SystemFunction">
+        <PropertyRef Name="SystemFunctionID" />
+      </Principal>
+      <Dependent Role="SystemFunctionMessage">
+        <PropertyRef Name="SystemFunctionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SystemFunctionObject_SystemFunction">
+    <End Role="SystemFunction" Type="Self.SystemFunction" Multiplicity="1" />
+    <End Role="SystemFunctionObject" Type="Self.SystemFunctionObject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SystemFunction">
+        <PropertyRef Name="SystemFunctionID" />
+      </Principal>
+      <Dependent Role="SystemFunctionObject">
+        <PropertyRef Name="SystemFunctionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SystemNavigation_SystemModule">
+    <End Role="SystemModule" Type="Self.SystemModule" Multiplicity="1" />
+    <End Role="SystemNavigation" Type="Self.SystemNavigation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SystemModule">
+        <PropertyRef Name="SystemModuleID" />
+      </Principal>
+      <Dependent Role="SystemNavigation">
+        <PropertyRef Name="SystemModuleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SystemNotificationHistory_SystemNotification">
+    <End Role="SystemNotification" Type="Self.SystemNotification" Multiplicity="1" />
+    <End Role="SystemNotificationHistory" Type="Self.SystemNotificationHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SystemNotification">
+        <PropertyRef Name="SystemNotificationID" />
+      </Principal>
+      <Dependent Role="SystemNotificationHistory">
+        <PropertyRef Name="SystemNotificationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SystemSearchParameter_SystemSearch">
+    <End Role="SystemSearch" Type="Self.SystemSearch" Multiplicity="1" />
+    <End Role="SystemSearchParameter" Type="Self.SystemSearchParameter" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SystemSearch">
+        <PropertyRef Name="SystemSearchID" />
+      </Principal>
+      <Dependent Role="SystemSearchParameter">
+        <PropertyRef Name="SystemSearchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SystemSearchSystemFunction_SystemFunction">
+    <End Role="SystemFunction" Type="Self.SystemFunction" Multiplicity="1" />
+    <End Role="SystemSearchSystemFunction" Type="Self.SystemSearchSystemFunction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SystemFunction">
+        <PropertyRef Name="SystemFunctionID" />
+      </Principal>
+      <Dependent Role="SystemSearchSystemFunction">
+        <PropertyRef Name="SystemFunctionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SystemSearchSystemFunction_SystemSearch">
+    <End Role="SystemSearch" Type="Self.SystemSearch" Multiplicity="1" />
+    <End Role="SystemSearchSystemFunction" Type="Self.SystemSearchSystemFunction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SystemSearch">
+        <PropertyRef Name="SystemSearchID" />
+      </Principal>
+      <Dependent Role="SystemSearchSystemFunction">
+        <PropertyRef Name="SystemSearchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserAddress_AddressType">
+    <End Role="AddressType" Type="Self.AddressType" Multiplicity="1" />
+    <End Role="UserAddress" Type="Self.UserAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AddressType">
+        <PropertyRef Name="AddressTypeID" />
+      </Principal>
+      <Dependent Role="UserAddress">
+        <PropertyRef Name="AddressTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserAddress_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="UserAddress" Type="Self.UserAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
         <PropertyRef Name="UserID" />
       </Principal>
-      <Dependent Role="UsersGroups">
+      <Dependent Role="UserAddress">
         <PropertyRef Name="UserID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_UserEmail_EmailType">
+    <End Role="EmailType" Type="Self.EmailType" Multiplicity="1" />
+    <End Role="UserEmail" Type="Self.UserEmail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmailType">
+        <PropertyRef Name="EmailTypeID" />
+      </Principal>
+      <Dependent Role="UserEmail">
+        <PropertyRef Name="EmailTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserEmail_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="UserEmail" Type="Self.UserEmail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="UserEmail">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserGroup_Group">
+    <End Role="Group" Type="Self.Group" Multiplicity="1" />
+    <End Role="UserGroup" Type="Self.UserGroup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group">
+        <PropertyRef Name="GroupID" />
+      </Principal>
+      <Dependent Role="UserGroup">
+        <PropertyRef Name="GroupID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserGroup_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="UserGroup" Type="Self.UserGroup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="UserGroup">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserPhone_PhoneType">
+    <End Role="PhoneType" Type="Self.PhoneType" Multiplicity="1" />
+    <End Role="UserPhone" Type="Self.UserPhone" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PhoneType">
+        <PropertyRef Name="PhoneTypeID" />
+      </Principal>
+      <Dependent Role="UserPhone">
+        <PropertyRef Name="PhoneTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserPhone_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="UserPhone" Type="Self.UserPhone" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="UserPhone">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="spGroupAvailableUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="spSystemPermissionRefresh" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="spUserAvailableGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="GroupID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="spUserGroupFilterGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="GroupID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="spUserGroupFilterUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="int" Mode="In" />
+  </Function>
   <EntityContainer Name="LDTEModelStoreContainer">
-    <EntitySet Name="Groups" EntityType="Self.Groups" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Permissions" EntityType="Self.Permissions" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="UsersGroups" EntityType="Self.UsersGroups" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK_Permissions_Groups" Association="Self.FK_Permissions_Groups">
-      <End Role="Groups" EntitySet="Groups" />
-      <End Role="Permissions" EntitySet="Permissions" />
+    <EntitySet Name="AddressType" EntityType="Self.AddressType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EmailType" EntityType="Self.EmailType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Group" EntityType="Self.Group" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GroupPermission" EntityType="Self.GroupPermission" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Organization" EntityType="Self.Organization" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrganizationAddress" EntityType="Self.OrganizationAddress" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrganizationPhone" EntityType="Self.OrganizationPhone" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Personnel" EntityType="Self.Personnel" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PhoneType" EntityType="Self.PhoneType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Position" EntityType="Self.Position" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PositionGroup" EntityType="Self.PositionGroup" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SystemDomain" EntityType="Self.SystemDomain" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SystemDomainModule" EntityType="Self.SystemDomainModule" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SystemFunction" EntityType="Self.SystemFunction" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SystemFunctionMessage" EntityType="Self.SystemFunctionMessage" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SystemFunctionObject" EntityType="Self.SystemFunctionObject" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SystemModule" EntityType="Self.SystemModule" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SystemNavigation" EntityType="Self.SystemNavigation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SystemNotification" EntityType="Self.SystemNotification" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SystemNotificationHistory" EntityType="Self.SystemNotificationHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SystemNotificationRecipient" EntityType="Self.SystemNotificationRecipient" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SystemSearch" EntityType="Self.SystemSearch" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SystemSearchParameter" EntityType="Self.SystemSearchParameter" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SystemSearchSystemFunction" EntityType="Self.SystemSearchSystemFunction" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserAddress" EntityType="Self.UserAddress" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserEmail" EntityType="Self.UserEmail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserGroup" EntityType="Self.UserGroup" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserHistory" EntityType="Self.UserHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserLoginAttempt" EntityType="Self.UserLoginAttempt" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserPhone" EntityType="Self.UserPhone" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_GroupPermission_Group" Association="Self.FK_GroupPermission_Group">
+      <End Role="Group" EntitySet="Group" />
+      <End Role="GroupPermission" EntitySet="GroupPermission" />
     </AssociationSet>
-    <AssociationSet Name="FK_UsersGroups_Groups" Association="Self.FK_UsersGroups_Groups">
-      <End Role="Groups" EntitySet="Groups" />
-      <End Role="UsersGroups" EntitySet="UsersGroups" />
+    <AssociationSet Name="FK_GroupPermission_SystemFunction" Association="Self.FK_GroupPermission_SystemFunction">
+      <End Role="SystemFunction" EntitySet="SystemFunction" />
+      <End Role="GroupPermission" EntitySet="GroupPermission" />
     </AssociationSet>
-    <AssociationSet Name="FK_UsersGroups_Users" Association="Self.FK_UsersGroups_Users">
-      <End Role="Users" EntitySet="Users" />
-      <End Role="UsersGroups" EntitySet="UsersGroups" />
+    <AssociationSet Name="FK_OrganizationAddress_AddressType" Association="Self.FK_OrganizationAddress_AddressType">
+      <End Role="AddressType" EntitySet="AddressType" />
+      <End Role="OrganizationAddress" EntitySet="OrganizationAddress" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrganizationAddress_Organization" Association="Self.FK_OrganizationAddress_Organization">
+      <End Role="Organization" EntitySet="Organization" />
+      <End Role="OrganizationAddress" EntitySet="OrganizationAddress" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrganizationPhone_Organization" Association="Self.FK_OrganizationPhone_Organization">
+      <End Role="Organization" EntitySet="Organization" />
+      <End Role="OrganizationPhone" EntitySet="OrganizationPhone" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrganizationPhone_PhoneType" Association="Self.FK_OrganizationPhone_PhoneType">
+      <End Role="PhoneType" EntitySet="PhoneType" />
+      <End Role="OrganizationPhone" EntitySet="OrganizationPhone" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Personnel_Position" Association="Self.FK_Personnel_Position">
+      <End Role="Position" EntitySet="Position" />
+      <End Role="Personnel" EntitySet="Personnel" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PositionGroup_Group" Association="Self.FK_PositionGroup_Group">
+      <End Role="Group" EntitySet="Group" />
+      <End Role="PositionGroup" EntitySet="PositionGroup" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PositionGroup_Position" Association="Self.FK_PositionGroup_Position">
+      <End Role="Position" EntitySet="Position" />
+      <End Role="PositionGroup" EntitySet="PositionGroup" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SystemDomainModule_SystemDomain" Association="Self.FK_SystemDomainModule_SystemDomain">
+      <End Role="SystemDomain" EntitySet="SystemDomain" />
+      <End Role="SystemDomainModule" EntitySet="SystemDomainModule" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SystemDomainModule_SystemModule" Association="Self.FK_SystemDomainModule_SystemModule">
+      <End Role="SystemModule" EntitySet="SystemModule" />
+      <End Role="SystemDomainModule" EntitySet="SystemDomainModule" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SystemFunction_SystemNavigation" Association="Self.FK_SystemFunction_SystemNavigation">
+      <End Role="SystemNavigation" EntitySet="SystemNavigation" />
+      <End Role="SystemFunction" EntitySet="SystemFunction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SystemFunctionMessage_SystemFunction" Association="Self.FK_SystemFunctionMessage_SystemFunction">
+      <End Role="SystemFunction" EntitySet="SystemFunction" />
+      <End Role="SystemFunctionMessage" EntitySet="SystemFunctionMessage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SystemFunctionObject_SystemFunction" Association="Self.FK_SystemFunctionObject_SystemFunction">
+      <End Role="SystemFunction" EntitySet="SystemFunction" />
+      <End Role="SystemFunctionObject" EntitySet="SystemFunctionObject" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SystemNavigation_SystemModule" Association="Self.FK_SystemNavigation_SystemModule">
+      <End Role="SystemModule" EntitySet="SystemModule" />
+      <End Role="SystemNavigation" EntitySet="SystemNavigation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SystemNotificationHistory_SystemNotification" Association="Self.FK_SystemNotificationHistory_SystemNotification">
+      <End Role="SystemNotification" EntitySet="SystemNotification" />
+      <End Role="SystemNotificationHistory" EntitySet="SystemNotificationHistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SystemSearchParameter_SystemSearch" Association="Self.FK_SystemSearchParameter_SystemSearch">
+      <End Role="SystemSearch" EntitySet="SystemSearch" />
+      <End Role="SystemSearchParameter" EntitySet="SystemSearchParameter" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SystemSearchSystemFunction_SystemFunction" Association="Self.FK_SystemSearchSystemFunction_SystemFunction">
+      <End Role="SystemFunction" EntitySet="SystemFunction" />
+      <End Role="SystemSearchSystemFunction" EntitySet="SystemSearchSystemFunction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SystemSearchSystemFunction_SystemSearch" Association="Self.FK_SystemSearchSystemFunction_SystemSearch">
+      <End Role="SystemSearch" EntitySet="SystemSearch" />
+      <End Role="SystemSearchSystemFunction" EntitySet="SystemSearchSystemFunction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserAddress_AddressType" Association="Self.FK_UserAddress_AddressType">
+      <End Role="AddressType" EntitySet="AddressType" />
+      <End Role="UserAddress" EntitySet="UserAddress" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserAddress_User" Association="Self.FK_UserAddress_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="UserAddress" EntitySet="UserAddress" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserEmail_EmailType" Association="Self.FK_UserEmail_EmailType">
+      <End Role="EmailType" EntitySet="EmailType" />
+      <End Role="UserEmail" EntitySet="UserEmail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserEmail_User" Association="Self.FK_UserEmail_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="UserEmail" EntitySet="UserEmail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserGroup_Group" Association="Self.FK_UserGroup_Group">
+      <End Role="Group" EntitySet="Group" />
+      <End Role="UserGroup" EntitySet="UserGroup" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserGroup_User" Association="Self.FK_UserGroup_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="UserGroup" EntitySet="UserGroup" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserPhone_PhoneType" Association="Self.FK_UserPhone_PhoneType">
+      <End Role="PhoneType" EntitySet="PhoneType" />
+      <End Role="UserPhone" EntitySet="UserPhone" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserPhone_User" Association="Self.FK_UserPhone_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="UserPhone" EntitySet="UserPhone" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

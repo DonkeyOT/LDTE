@@ -5,81 +5,119 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div id="page-wrapper">
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">User management</h1>
-        </div>
-        <!-- /.col-lg-12 -->
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    Users
-                </div>
-                <!-- /.panel-heading -->
-                <div class="panel-body">
-                    <div>
-                        <h4>User Details</h4>
-                        <hr />
-                        <dl class="dl-horizontal">
-                            <dt>
-                                @Html.DisplayNameFor(model => model.FirstName)
-                            </dt>
+<h2>Details</h2>
 
-                            <dd>
-                                @Html.DisplayFor(model => model.FirstName)
-                            </dd>
+<div>
+    <h4>User</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PrefixName)
+        </dt>
 
-                            <dt>
-                                @Html.DisplayNameFor(model => model.LastName)
-                            </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PrefixName)
+        </dd>
 
-                            <dd>
-                                @Html.DisplayFor(model => model.LastName)
-                            </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
 
-                            <dt>
-                                @Html.DisplayNameFor(model => model.Email)
-                            </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
 
-                            <dd>
-                                @Html.DisplayFor(model => model.Email)
-                            </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
 
-                            <dt>
-                                @Html.DisplayNameFor(model => model.Password)
-                            </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
 
-                            <dd>
-                                @Html.DisplayFor(model => model.Password)
-                            </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MiddleName)
+        </dt>
 
-                            <dt>
-                                @Html.DisplayNameFor(model => model.PhoneWork)
-                            </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MiddleName)
+        </dd>
 
-                            <dd>
-                                @Html.DisplayFor(model => model.PhoneWork)
-                            </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SuffixName)
+        </dt>
 
-                            <dt>
-                                @Html.DisplayNameFor(model => model.PhoneMobile)
-                            </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SuffixName)
+        </dd>
 
-                            <dd>
-                                @Html.DisplayFor(model => model.PhoneMobile)
-                            </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfBirth)
+        </dt>
 
-                        </dl>
-                    </div>
-                    <p>
-                        @Html.ActionLink("Edit", "Edit", new { id = Model.UserID }) |
-                        @Html.ActionLink("Back to List", "Index")
-                    </p>
-                    </div>
+        <dd>
+            @Html.DisplayFor(model => model.DateOfBirth)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Login)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Login)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SecurityHint)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SecurityHint)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SecurityAnswer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SecurityAnswer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PasswordDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PasswordDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LockoutFlag)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LockoutFlag)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InactiveDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InactiveDate)
+        </dd>
+
+    </dl>
 </div>
-</div>
-</div>
-</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.UserID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LDTE_Web.Models;
+using System.Data.Entity.Validation;
+using System.Text;
 
 namespace LDTE_Web.Controllers
 {
@@ -16,31 +18,43 @@ namespace LDTE_Web.Controllers
         public LDTEEntities db = new LDTEEntities();
 
         // GET: Groups
-        public ActionResult Index()
+       [Authorize]
+        public ActionResult ManageGroup ()
         {
             return View(db.Groups.ToList());
         }
 
-        // GET: Groups/Details/5
-        public ActionResult Details(int? id)
+
+        //public ActionResult loadPartial()
+        //{
+
+        //    return PartialView("Parital");
+        //}
+
+        public ActionResult Details(int? id, string formView)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Group group = db.Groups.Find(id);
+
             if (group == null)
             {
                 return HttpNotFound();
             }
-            return View(group);
+            else
+            {
+                group.FormView = formView;
+            }
+            return PartialView("_Details", group);
         }
 
         // GET: Groups/Create
-        public ActionResult Create()
+        public ActionResult CreateGroup(string formView)
         {
-            return View();
-            //return PartialView("_Create");
+            var dto = new Group { FormView = formView };
+            return PartialView("_Create", dto);
         }
 
         // POST: Groups/Create
@@ -48,20 +62,28 @@ namespace LDTE_Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "GroupID,Name,Description")] Group group)
+        public ActionResult CreateGroup([Bind(Include = "GroupID,GroupName,GroupCode,GroupAlias,GroupDescription")] Group group)
         {
             if (ModelState.IsValid)
             {
-                db.Groups.Add(group);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.Groups.Add(group);
+                    db.SaveChanges();
+                   // return RedirectToAction("ManageGroup");
+                    return Content("SUCCESS");
+                }
+                catch (Exception ex)
+                {
+                    return Content(ex.Message);
+                }
             }
 
             return View(group);
         }
 
         // GET: Groups/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult EditGroup(int? id, string formView)
         {
             if (id == null)
             {
@@ -72,7 +94,10 @@ namespace LDTE_Web.Controllers
             {
                 return HttpNotFound();
             }
-            return View(group);
+            group.FormView = formView;
+
+            return PartialView("_Edit", group);
+
         }
 
         // POST: Groups/Edit/5
@@ -80,19 +105,19 @@ namespace LDTE_Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "GroupID,Name,Description")] Group group)
+        public ActionResult EditGroup([Bind(Include = "GroupID,GroupName,GroupCode,GroupAlias,GroupDescription")] Group group)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(group).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                    db.Entry(group).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return Content("SUCCESS");
             }
             return View(group);
         }
 
         // GET: Groups/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult DeleteGroup(int? id, string formView)
         {
             if (id == null)
             {
@@ -103,23 +128,32 @@ namespace LDTE_Web.Controllers
             {
                 return HttpNotFound();
             }
-            return View(group);
+            group.FormView = formView;
+            return PartialView("_Delete", group);
         }
 
         // POST: Groups/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("DeleteGroup")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Group group = db.Groups.Find(id);
-            db.Groups.Remove(group);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                Group group = db.Groups.Find(id);
+                db.Groups.Remove(group);
+                db.SaveChanges();
+                return Content("SUCCESS");
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+
         }
         public ActionResult ShowUsers(int id)
         {
             Group group = db.Groups.Find(id);
-            return PartialView("_UserManage",group);
+            return PartialView("_UserManage", group);
         }
 
 
@@ -129,40 +163,54 @@ namespace LDTE_Web.Controllers
             Group group = db.Groups.Find(id);
             return View(group);
         }
-    
-        [HttpPost]
-        public ActionResult AddUsers(Group group)
-        {
-            try {
-                var usergroup = new UsersGroup { UserID = group.UserID, GroupID = group.GroupID };
-                db.UsersGroups.Add(usergroup);
-                db.SaveChanges();
-                return RedirectToAction("AddUsers", new { id = group.GroupID });
-            }
-            catch(Exception ex)
-            {
-                Group dto = db.Groups.Find(group.GroupID);
-                this.ModelState.AddModelError(string.Empty, ex.Message);
-                return View(dto);   
-            } 
-        }
 
-        public ActionResult DeleteUserGroup(int id)
+        [HttpPost]
+        public ActionResult AddUsers(Group group, int[] inid)
         {
-            var ugr = db.UsersGroups.Where(ug => ug.UsersGroupsID == id).FirstOrDefault();
             try
             {
-               
-                db.UsersGroups.Remove(ugr);
-                db.SaveChanges();
-
-                return RedirectToAction("AddUsers", new { id = ugr.GroupID });
+                if (inid != null)
+                {
+                    foreach (int i in inid)
+                    {
+                        var usergroup = new UserGroup { UserID = i, GroupID = group.GroupID };
+                        db.UserGroups.Add(usergroup);
+                        db.SaveChanges();
+                    }
+                }
+                return RedirectToAction("AddUsers", new { id = group.GroupID });
             }
             catch (Exception ex)
             {
+                Group dto = db.Groups.Find(group.GroupID);
                 this.ModelState.AddModelError(string.Empty, ex.Message);
-                return View("AddUsers", ugr.Group);
+                return View(dto);
             }
+        }
+
+        [HttpPost]
+        public ActionResult DeleteUserGroup(int groupid, int[] outid)
+        {
+            Group group = db.Groups.Find(groupid);
+            try {
+                if (outid != null)
+                {
+                    foreach (int i in outid)
+                    {
+                        var ug = db.UserGroups.Find(i);
+                        db.UserGroups.Remove(ug);
+                        db.SaveChanges();
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Group dto = db.Groups.Find(group.GroupID);
+                this.ModelState.AddModelError(string.Empty, ex.Message);
+                return View(dto);
+            }
+            return RedirectToAction("AddUsers", new { id = groupid});
         }
         protected override void Dispose(bool disposing)
         {
